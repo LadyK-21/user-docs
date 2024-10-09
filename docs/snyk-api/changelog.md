@@ -1,3 +1,271 @@
+## 2024-08-25
+
+### GET - `/self` - Updated
+- added `#/components/schemas/User20240422, #/components/schemas/ServiceAccount20240422` to the `data/attributes` response property `anyOf` list for the response status `200`
+
+- removed `#/components/schemas/ServiceAccount` from the `data/attributes` response property `anyOf` list for the response status `200`
+
+
+
+### PATCH - `/orgs/{org_id}` - Updated
+- request property `data/type` was restricted to a list of enum values
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/attributes` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/id` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/type` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `org` enum value to the `data/type` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `org` enum value to the request property `data/type`
+
+- removed the pattern `^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$` from the request property `data/type`
+
+- the `data/type` response`s property pattern `^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$` was removed for the status `200`
+
+
+
+### GET - `/orgs/{org_id}/projects` - Updated
+- removed the optional property `data/items/attributes/settings/auto_dependency_upgrade/is_inherited` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added `#/components/schemas/ProjectRelationshipsTarget20230215` to the `data/items/relationships/target` response property `oneOf` list for the response status `200`
+
+- removed `#/components/schemas/ProjectRelationshipsTarget` from the `data/items/relationships/target` response property `oneOf` list for the response status `200`
+
+
+
+### PATCH - `/orgs/{org_id}/projects/{project_id}` - Updated
+- removed the optional property `data/attributes/settings/auto_dependency_upgrade/is_inherited` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added `#/components/schemas/ProjectRelationshipsTarget20230215` to the `data/relationships/target` response property `oneOf` list for the response status `200`
+
+- removed `#/components/schemas/ProjectRelationshipsTarget` from the `data/relationships/target` response property `oneOf` list for the response status `200`
+
+
+
+### GET - `/orgs/{org_id}/projects/{project_id}` - Updated
+- removed the optional property `data/attributes/settings/auto_dependency_upgrade/is_inherited` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added `#/components/schemas/ProjectRelationshipsTarget20230215` to the `data/relationships/target` response property `oneOf` list for the response status `200`
+
+- removed `#/components/schemas/ProjectRelationshipsTarget` from the `data/relationships/target` response property `oneOf` list for the response status `200`
+
+
+
+### GET - `/orgs/{org_id}/projects/{project_id}/sbom` - Updated
+- removed the required property `bomFormat` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the required property `components` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the required property `dependencies` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the required property `dependencies` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the required property `metadata` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the required property `metadata` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the required property `specVersion` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the required property `version` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the optional property `components` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new enum value `cyclonedx1.5+json` to the `query` request parameter `format`
+
+- added the new enum value `cyclonedx1.5+xml` to the `query` request parameter `format`
+
+- added the new enum value `cyclonedx1.6+json` to the `query` request parameter `format`
+
+- added the new enum value `cyclonedx1.6+xml` to the `query` request parameter `format`
+
+
+
+### GET - `/orgs/{org_id}/packages/{purl}/issues` - Updated
+- removed the optional property `data/items/attributes/coordinates/items/representation` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the optional property `data/items/attributes/key` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the optional property `data/items/attributes/slots/exploit` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the optional property `data/items/attributes/severities/items/type` to the response with the `200` status
+
+- added the optional property `data/items/attributes/severities/items/version` to the response with the `200` status
+
+- added the optional property `data/items/attributes/slots/exploit_details` to the response with the `200` status
+
+- added the required property `data/items/attributes/coordinates/items/representations` to the response with the `200` status
+
+
+
+### POST - `/orgs/{org_id}/packages/issues` - Updated
+- removed the optional property `data/items/attributes/slots/exploit` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the optional property `data/items/attributes/severities/items/type` to the response with the `200` status
+
+- added the optional property `data/items/attributes/severities/items/version` to the response with the `200` status
+
+- added the optional property `data/items/attributes/slots/exploit_details` to the response with the `200` status
+
+
+
+### POST - `/orgs/{org_id}/memberships` - Added
+- Create a org membership for a user with role
+
+
+### GET - `/orgs/{org_id}/memberships` - Added
+- Returns all memberships of the org
+
+
+### PATCH - `/orgs/{org_id}/memberships/{membership_id}` - Added
+- Update a org membership for a user with role
+
+
+### DELETE - `/orgs/{org_id}/memberships/{membership_id}` - Added
+- Remove a user`s membership of the group.
+
+
+
+### POST - `/orgs/{org_id}/invites` - Updated
+- removed the request property `data/relationships`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/orgs/{org_id}/invites` - Updated
+- the `data/items/attributes/role` response`s property type/format changed from `string`/`uuid` to `string`/`` for status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the `org_invitation` enum value from the `data/items/type` response property for the response status `200`
+
+
+
+### POST - `/orgs/{org_id}/collections` - Updated
+- the `data/attributes/name` response property`s maxLength was unset from `255` for the response status `201`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/attributes/name` response property`s minLength was decreased from `1` to `0` for the response status `201`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/attributes/name` response`s property pattern `^([a-zA-Z0-9 _\-\/:.])+$` was removed for the status `201`
+
+
+
+### GET - `/orgs/{org_id}/collections` - Updated
+- the `data/items/attributes/name` response property`s maxLength was unset from `255` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/items/attributes/name` response property`s minLength was decreased from `1` to `0` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/items/attributes/name` response`s property pattern `^([a-zA-Z0-9 _\-\/:.])+$` was removed for the status `200`
+
+
+
+### PATCH - `/orgs/{org_id}/collections/{collection_id}` - Updated
+- the `data/attributes/name` response property`s maxLength was unset from `255` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/attributes/name` response property`s minLength was decreased from `1` to `0` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/attributes/name` response`s property pattern `^([a-zA-Z0-9 _\-\/:.])+$` was removed for the status `200`
+
+
+
+### GET - `/orgs/{org_id}/collections/{collection_id}` - Updated
+- the `data/attributes/name` response property`s maxLength was unset from `255` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/attributes/name` response property`s minLength was decreased from `1` to `0` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the `data/attributes/name` response`s property pattern `^([a-zA-Z0-9 _\-\/:.])+$` was removed for the status `200`
+
+
+
+### GET - `/orgs/{org_id}/audit_logs/search` - Updated
+- for the `query` request parameter `size`, default value `100.00` was added
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### POST - `/orgs/{org_id}/apps` - Updated
+- added the new required request property `name`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new required request property `redirect_uris`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new required request property `scopes`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the request property `data`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new optional request property `access_token_ttl_seconds`
+
+- added the new optional request property `context`
+
+
+
+### GET - `/orgs/{org_id}/apps` - Updated
+- the `data/items/attributes/redirect_uris` response property`s minItems was decreased from `1` to `0` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the response property `data/items/attributes/client_id` became required for the status `200`
+
+- the response property `data/items/attributes/redirect_uris` became required for the status `200`
+
+
+
+### PATCH - `/orgs/{org_id}/apps/{client_id}` - Updated
+- the `data/attributes/redirect_uris` response property`s minItems was decreased from `1` to `0` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the request property `data`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new optional request property `access_token_ttl_seconds`
+
+- added the new optional request property `name`
+
+- added the new optional request property `redirect_uris`
+
+- the response property `data/attributes/client_id` became required for the status `200`
+
+- the response property `data/attributes/redirect_uris` became required for the status `200`
+
+
+
+### GET - `/orgs/{org_id}/apps/{client_id}` - Updated
+- the `data/attributes/redirect_uris` response property`s minItems was decreased from `1` to `0` for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the response property `data/attributes/client_id` became required for the status `200`
+
+- the response property `data/attributes/redirect_uris` became required for the status `200`
+
+
+
+### POST - `/groups/{group_id}/settings/pull_request_template` - Updated
+- removed the request property `data/attributes/branch_name`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- removed the optional property `data/attributes/branch_name` from the response with the `201` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/groups/{group_id}/settings/pull_request_template` - Updated
+- removed the optional property `data/attributes/branch_name` from the response with the `200` status
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/groups/{group_id}/org_memberships` - Added
+- Get list of org memberships of a group user
+
+
+### POST - `/groups/{group_id}/memberships` - Added
+- Create a group membership for a user with role
+
+
+### GET - `/groups/{group_id}/memberships` - Added
+- Returns all memberships of the group
+
+
+### PATCH - `/groups/{group_id}/memberships/{membership_id}` - Added
+- Update a role from a group membership
+
+
+### DELETE - `/groups/{group_id}/memberships/{membership_id}` - Added
+- Deletes a membership from a group
+
+
+### GET - `/groups/{group_id}/audit_logs/search` - Updated
+- for the `query` request parameter `size`, default value `100.00` was added
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
 ## 2024-05-23
 
 ### DELETE - `/self/apps/installs/{install_id}` - Updated
