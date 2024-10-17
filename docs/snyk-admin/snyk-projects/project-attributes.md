@@ -19,13 +19,13 @@ The available Project attributes are summarized in the following table.
 | Lifecycle stage                                                                                                                                                                                                                                                                                                         | <ul><li>Production</li><li>Development</li><li>Sandbox</li></ul>                                                                                            |
 
 {% hint style="info" %}
-You can apply attributes to Projects and remove attributes using the Snyk API v1 endpoint [Applying attributes](https://snyk.docs.apiary.io/#reference/projects/project-attributes/applying-attributes).
+You can apply attributes to Projects and remove attributes using endpoint [Applying attributes](../../snyk-api/reference/projects-v1.md#org-orgid-project-projectid-attributes).
 
 You can also apply and remove attributes using Snyk CLI options, `--project-business-criticality`, `--project-environment`, and -`-project-lifecycle`. Refer to the [CLI commands and options summary](../../snyk-cli/cli-commands-and-options-summary.md) for the commands that support these options.
 {% endhint %}
 
 {% hint style="info" %}
-Organization admins can add an attribute to a Project. However, only Group admins can modify Project attributes in cases where attributes match a policy, because policies can only be managed by Group admins.
+Roles with the **edit project attributes** permission can add an attribute to a Project.
 {% endhint %}
 
 ## **Apply an attribute value to Project**

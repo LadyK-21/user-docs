@@ -1,5 +1,7 @@
 # CLI commands and options summary
 
+
+
 {% hint style="info" %}
 This page **only summarizes** the CLI commands and the options for each command. **For details, use the links in this summary to open the help** docs page for the command you are using. The help docs pages are the same as the help in the CLI.
 {% endhint %}
@@ -26,6 +28,10 @@ Authenticate Snyk CLI with a Snyk account.
 
 Manage Snyk CLI configuration.
 
+### [`snyk config environment`](https://docs.snyk.io/snyk-cli/commands/config-environment)
+
+Use to set your environment for the region before you run the `snyk auth` command.
+
 ### [`snyk test`](https://docs.snyk.io/snyk-cli/commands/test)
 
 Test a Project for open-source vulnerabilities and license issues.
@@ -38,9 +44,9 @@ Snapshot and continuously monitor a project for open-source vulnerabilities and 
 
 `Print the name of the snyk code` command `with its help option: snyk code test`
 
-### [snyk code test](https://docs.snyk.io/snyk-cli/commands/code-test)
+### [`snyk code test`](https://docs.snyk.io/snyk-cli/commands/code-test)
 
-Test for any known security issues using Static Code Analysis.
+Test source code for any known security issues (Static Application Security Testing).
 
 ### [`snyk container`](https://docs.snyk.io/snyk-cli/commands/container)
 
@@ -50,15 +56,15 @@ Print a list of the `snyk container` commands, `snyk container monitor` and `sny
 
 Capture the container image layers and dependencies and monitor for vulnerabilities on [snyk.io](https://snyk.io).
 
-### [snyk container SBOM](https://docs.snyk.io/snyk-cli/commands/container-sbom)
+### [`snyk container SBOM`](https://docs.snyk.io/snyk-cli/commands/container-sbom)
 
 Generate an SBOM for a container image
 
-### [snyk container test](https://docs.snyk.io/snyk-cli/commands/container-test)
+### [`snyk container test`](https://docs.snyk.io/snyk-cli/commands/container-test)
 
 Test container images for any known vulnerabilities.
 
-### [snyk iac](https://docs.snyk.io/snyk-cli/commands/iac)
+### [`snyk iac`](https://docs.snyk.io/snyk-cli/commands/iac)
 
 Print a list of the `snyk iac` commands: `snyk iac describe`, `snyk iac update-exclude-policy`, and `snyk iac test`.
 
@@ -66,7 +72,7 @@ Print a list of the `snyk iac` commands: `snyk iac describe`, `snyk iac update-e
 
 Test for any known security issue.
 
-### [snyk iac capture](https://docs.snyk.io/snyk-cli/commands/iac-capture)
+### [`snyk iac capture`](https://docs.snyk.io/snyk-cli/commands/iac-capture)
 
 Generate a mapping artifact that contains the minimum amount of information needed to generate resource mappings from code to Cloud from Terraform state files, such as resource IDs and names, and send the mapping artifact to Snyk.
 
@@ -74,15 +80,15 @@ Generate a mapping artifact that contains the minimum amount of information need
 
 Detect, track, and alert on infrastructure drift and unmanaged resources.
 
-### [snyk iac rules init](https://docs.snyk.io/snyk-cli/commands/iac-rules-init)
+### [`snyk iac rules init`](https://docs.snyk.io/snyk-cli/commands/iac-rules-init)
 
 Initialize custom rules project structure, relation, rule, or spec
 
-### [snyk iac rules test](https://docs.snyk.io/snyk-cli/commands/iac-rules-test)
+### [`snyk iac rules test`](https://docs.snyk.io/snyk-cli/commands/iac-rules-test)
 
 Run tests for all custom rules.
 
-### [snyk iac rules push](https://docs.snyk.io/snyk-cli/commands/iac-rules-push)
+### [`snyk iac rules push`](https://docs.snyk.io/snyk-cli/commands/iac-rules-push)
 
 Bundle and upload custom rule bundles to Snyk Cloud API.
 
@@ -100,7 +106,7 @@ Find Log4Shell vulnerability.
 
 ### [`snyk policy`](https://docs.snyk.io/snyk-cli/commands/policy)
 
-generates a mapping artifact that contains the minimum amount of information needed to generate, from Terraform state files, resource mappings from code to Cloud, such as resource IDs and names, and sends the mapping artifact to Snyk.Display the `.snyk` policy for a package.
+Display the `.snyk` policy for a package.
 
 ### [`snyk sbom`](https://docs.snyk.io/snyk-cli/commands/sbom)
 
@@ -108,7 +114,7 @@ Generate an SBOM for a local software project in an ecosystem supported by Snyk.
 
 ### [`snyk sbom test`](https://docs.snyk.io/snyk-cli/commands/sbom-test)
 
-Checks an SBOM for vulnerabilities in open-source packages.
+Check an SBOM for vulnerabilities in o pen-source packages.
 
 ## New CLI commands
 
@@ -118,7 +124,7 @@ Apply the recommended updates for supported ecosystems automatically. For more i
 
 ### [`snyk apps`](https://docs.snyk.io/snyk-cli/create-a-snyk-app-using-the-snyk-cli)
 
-Create a Snyk App using the Snyk CLI. For more information, see [Snyk Apps](../snyk-api-info/snyk-apps/).
+Create a Snyk App using the Snyk CLI. For more information, see [Snyk Apps](../snyk-api/how-to-use-snyk-apps-apis/).
 
 ## Subcommands of CLI commands
 
@@ -132,13 +138,15 @@ The following is a list of the sub-commands for Snyk CLI commands. Each sub-comm
 
 `clear`: subcommand of [`config`](https://docs.snyk.io/snyk-cli/commands/config)
 
+`environment`: subcommand of [`config`](https://docs.snyk.io/snyk-cli/commands/config)
+
 ## Configure the Snyk CLI
 
 You can use environment variables to configure the Snyk CLI and also set variables to configure the Snyk CLI to connect with the Snyk API. See [Configure the Snyk CLI](https://docs.snyk.io/snyk-cli/configure-the-snyk-cli).
 
 ## Debug
 
-Use `-d` option to output the debug logs for any command.
+See [Debugging the Snyk CLI](debugging-the-snyk-cli.md) for detailed information about the `--d` option.
 
 ## Exit codes for CLI commands
 
@@ -197,7 +205,7 @@ Lists of the options for Snyk CLI commands follow. Each option is followed by th
 
 `--project-name=<PROJECT_NAME>`: [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor), [`container test`](https://docs.snyk.io/snyk-cli/commands/container-test), [`container monitor`](https://docs.snyk.io/snyk-cli/commands/container-monitor)
 
-`--target-reference=<TARGET_REFERENCE>`: [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor), [`iac test`](https://docs.snyk.io/snyk-cli/commands/iac-test)
+`--target-reference=<TARGET_REFERENCE>`: [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor), [`iac test`](https://docs.snyk.io/snyk-cli/commands/iac-test)`,`[`container monitor`](https://docs.snyk.io/snyk-cli/commands/container-monitor)
 
 `--policy-path=<PATH_TO_POLICY_FILE>`: [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor), [`container test`](https://docs.snyk.io/snyk-cli/commands/container-test), [`container monitor`](https://docs.snyk.io/snyk-cli/commands/container-monitor), [`iac test`](https://docs.snyk.io/snyk-cli/commands/iac-test), [`iac describe`](https://docs.snyk.io/snyk-cli/commands/iac-describe), [`ignore`](https://docs.snyk.io/snyk-cli/commands/ignore)
 
@@ -223,13 +231,23 @@ Lists of the options for Snyk CLI commands follow. Each option is followed by th
 
 `--tags=<TAG>[,<TAG>]...>`: [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor), [`container monitor`](https://docs.snyk.io/snyk-cli/commands/container-monitor)
 
-## `snyk code test command`
+## `snyk auth` command options
+
+\--`auth-type=<TYPE>`\
+`--client-secret=<SECRET>`\
+`--client-id=<ID>` [`snyk auth`](https://docs.snyk.io/snyk-cli/commands/auth)
+
+## `snyk code test` command option&#x20;
 
 `--include-ignores`: [`code test`](https://docs.snyk.io/snyk-cli/commands/code-test)
 
 ## `snyk code test` and `snyk iac test` command option
 
 `--report`: [`code test`](https://docs.snyk.io/snyk-cli/commands/code-test),  [`iac test`](https://docs.snyk.io/snyk-cli/commands/iac-test)
+
+## `snyk config environment command option`
+
+`--no-check` [snyk config environment](https://docs.snyk.io/snyk-cli/commands/config-environment)
 
 ## `snyk container` command options
 
@@ -384,6 +402,16 @@ Lists of the options for Snyk CLI commands follow. Each option is followed by th
 ## Options for npm projects
 
 `--strict-out-of-sync=true|false`: [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor), [sbom](https://docs.snyk.io/snyk-cli/commands/sbom)
+
+## Options for pnpm projects
+
+`--dev:` [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor)
+
+\--all-projects: [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor)
+
+\--fail-on: [`test`](https://docs.snyk.io/snyk-cli/commands/test)
+
+\--prune-repeated-subdependencies: [`test`](https://docs.snyk.io/snyk-cli/commands/test), [`monitor`](https://docs.snyk.io/snyk-cli/commands/monitor)
 
 ## Options for Yarn projects
 
