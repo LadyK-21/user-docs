@@ -10,11 +10,19 @@ Sometimes, these issues are rooted deep in the code. Open-source packages often 
 
 Snyk Open Source allows you to find and fix vulnerabilities in the open-source libraries used by your applications. You can also find and address licensing issues in or caused by these open-source libraries.
 
-Snyk Open Source is available in many common languages and platforms. See [Supported languages and package managers](../../getting-started/supported-languages-and-frameworks/).
+Snyk Open Source is available in many common languages and platforms. See [Supported languages and package managers](../../supported-languages-package-managers-and-frameworks/).
+
+{% hint style="info" %}
+Only official releases are tracked. Commits, including into the default branch, are not identified unless included in an official release or tag.&#x20;
+
+In the case of projects that have a package manager, this means a release to the package manager.&#x20;
+
+In the case of Go and Unmanaged scans (C/C++) this requires an official relase or tag on the GitHub repo.
+{% endhint %}
 
 ## Find and fix vulnerabilities
 
-Use Snyk Open Source to find and fix vulnerabilities in the open-source libraries in your application. Snyk provides actionable fix advice for vulnerabilities and supports workflows to fix vulnerabilities using pull requests. For more information, see [Automatic and manual PRs with Snyk Open Source](../pull-requests/snyk-fix-pull-or-merge-requests/).
+Use Snyk Open Source to find and fix vulnerabilities in the open-source libraries in your application. Snyk provides actionable fix advice for vulnerabilities and supports workflows to fix vulnerabilities using pull requests. For more information, see [Automatic and manual PRs with Snyk Open Source](../pull-requests/snyk-pull-or-merge-requests/).
 
 Snyk Open Source also helps prioritize and report on the vulnerabilities discovered. For more information, see [Manage risk](../../manage-risk/).
 

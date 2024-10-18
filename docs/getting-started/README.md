@@ -1,59 +1,112 @@
 # Getting started
 
-## What is Snyk?
 
-Snyk is a platform that allows you to scan, prioritize, and fix security vulnerabilities in your code, open-source dependencies, container images, and infrastructure as code configurations.
 
-## The Snyk developer-first approach
+{% hint style="info" %}
+Ensure you use languages, package managers, and frameworks supported by Snyk. See [Supported languages, package managers, and frameworks](../supported-languages-package-managers-and-frameworks/).
+{% endhint %}
 
-Snyk provides visibility in a developer’s workflow and actionable insights. The benefit is engaging developers in security practices as part of their development work. Thus, the focus is on building a secure application rather than overhead-intensive work, such as putting in hard QA gates.&#x20;
+## Supported browsers
 
-Developers now assemble applications with a combination of proprietary and open-source code, run that code in containers, and then deploy with infrastructure as code configurations using technologies like Kubernetes and Terraform.
+{% hint style="info" %}
+Snyk does not support Microsoft Internet Explorer.
+{% endhint %}
 
-A robust security process secures each of these components where they are built and maintained. Snyk integrates into DevOps processes to work with developers using the methods each prefers, while following and supporting industry best practices. Snyk integrates directly into your IDEs, workflows, and automation pipelines to add security expertise to your toolkit.
+Snyk supports the latest versions of the following web browsers:
 
-<figure><img src="../.gitbook/assets/image (162) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="Developer Security Platform: Products and Developer experience"><figcaption><p>Developer Security Platform: Products and Developer experience</p></figcaption></figure>
+* [Chrome](https://www.google.com/chrome/)
+* [Edge](https://www.microsoft.com/en-us/edge?form=MA13FJ)
+* [Firefox](https://www.mozilla.org/en-US/firefox/new/)
+* [Safari](https://www.apple.com/safari/) (except for [Opening Fix PR](../scan-with-snyk/pull-requests/snyk-pull-or-merge-requests/))
 
-## Use Snyk in your workflow
+{% hint style="info" %}
+Snyk requires Javascript to be enabled on your browser.
+{% endhint %}
 
-* **Secure your code**: use [Snyk Open Source](../scan-with-snyk/snyk-open-source/) to fix vulnerabilities in your open source dependencies and [Snyk Code](../scan-with-snyk/snyk-code/) to fix vulnerabilities in your source code.
-* **Secure your containers**: use [Snyk Container](../scan-with-snyk/snyk-container/) to fix vulnerabilities in container images and Kubernetes applications.
-* **Secure your infrastructure**: use [Snyk Infrastructure as Code (IaC)](../scan-with-snyk/snyk-iac/scan-your-iac-source-code/) to fix misconfigurations in Terraform, CloudFormation, Kubernetes, and Azure templates. Use [IaC+](../scan-with-snyk/snyk-iac/iac+-code-to-cloud-capabilities/) to fix misconfigurations in Amazon Web Services accounts, Microsoft Azure subscriptions, and Google Cloud Projects.
+To start performing basic tasks in the Snyk application:
 
-## Choose how to run Snyk
+## **Create or log in to a Snyk account**
 
-You can run Snyk in the following ways:
+To create a free account or sign up for a pricing plan, navigate to [snyk.io](https://snyk.io/). For details, see [Snyk Pricing Plans](https://docs.snyk.io/implement-snyk/enterprise-implementation-guide/trial-limitations).&#x20;
 
-* [**Web**](snyk-web-ui.md): the Snyk Web UI ([app.snyk.io](https://app.snyk.io)) provides a browser-based experience with functions such as configuration settings, filtering and fixing discovered issues, and reports.
-* [**CLI**](../snyk-cli/): the Snyk Command Line Interface enables you to run vulnerability scans on your local machine and integrate Snyk into your pipeline.
-* [**IDEs**](../integrate-with-snyk/use-snyk-in-your-ide/): the Snyk IDE integrations enable you to embed Snyk in your development environment.
-* [**API**](../snyk-api/): the Snyk API enables you to integrate with Snyk programmatically, tuning Snyk security automation to your specific workflows.
+If your company has an existing Snyk account and uses single sign-on (SSO), use the SSO link provided by your administrators.
 
-This video shows using the CLI to scan for vulnerabilities.
+If your company requires an invitation to use Snyk, when you log in for the first time, you may see a list of Organizations, which in Snyk control access to Projects. To request access to an Organization, select the name of an Organization Admin in order to request access.
 
-{% embed url="https://thoughtindustries-1.wistia.com/medias/b8vrvtmnbu" %}
-Running Snyk from the command line.
-{% endembed %}
+{% hint style="info" %}
+If you log in with a different authentication provider from the one your company uses for the Snyk account, you create a new account. You will not be logged in to the correct Organization for your company.
+{% endhint %}
 
-## How can Snyk work in my environment?
+When you log in to the Snyk Web UI, Snyk shows your preferred (default) Organization. Snyk also uses the settings for your preferred Organization when you test a Project locally using the CLI. To change your default Organization, see [Manage account preferences and settings](snyk-web-ui.md#manage-account-preferences-and-settings).
 
-The Snyk tech stacks that are supported depend on the Snyk product you use:
+## **Set up a Snyk integration**
 
-* **Snyk Open Source** and **Snyk Code**: see [Supported languages and frameworks](supported-languages-and-frameworks/).
-* **Snyk Container**: see [Supported operating system distributions](../scan-with-snyk/snyk-container/how-snyk-container-works/supported-operating-system-distributions.md).
-* **Snyk Infrastructure as Code**: see [Supported IaC and cloud providers](../scan-with-snyk/snyk-iac/supported-iac-languages-cloud-providers-and-cloud-resources/).
+For Snyk to know where to scan, you must provide it with access to your environment. The type of integration you need depends on what systems you use, what you want to scan, and where you want to add the integrations - [Organization](https://docs.snyk.io/integrate-with-snyk#integrations-for-snyk) or [Group](https://docs.snyk.io/integrate-with-snyk#integrations-for-snyk-apprisk). For information about available integrators, see [Snyk SCM integrations](https://docs.snyk.io/scm-ide-and-ci-cd-integrations/snyk-scm-integrations) and [Integrate with Snyk](https://docs.snyk.io/integrate-with-snyk) .
 
-## What can Snyk integrate with?
+To scan your code, you must first integrate Snyk with the repository holding that code.
 
-Snyk integrations for your software development process allow you to integrate Snyk into your development and security processes, including source control, IDE, CI/CD, and many others.
+### Guided process
 
-See [Integrate with Snyk](../integrate-with-snyk/) for details.
+After creating a Snyk account, you can follow the optional getting started walkthrough prompts to provide information and help Snyk guide your experience. This includes choosing an integration method, setting access permissions, configuring automation settings, and authenticating that integration.
 
-## **What does Snyk cost?**
+Alternatively, if you want to scan your code without authenticating to your source code repository, you can select the CLI integration. This allows you to run scans from your local machine and upload results to your Organization in Snyk.
 
-Snyk has several pricing plans available, from free to Enterprise. See [Snyk Pricing Plans](../implement-snyk/enterprise-implementation-guide/trial-limitations.md).
+### Manual process
 
-## What happens to my data?
+You can add an integration to Snyk manually at any point, from the Snyk Web UI. To do this, navigate to **Integrations > Source Control**. For more information, see [Integrate with Snyk](../integrate-with-snyk/).
 
-See [How Snyk handles your data](../working-with-snyk/how-snyk-handles-your-data.md) for details of Snyk data handling.&#x20;
+{% hint style="info" %}
+If an integration is already configured for your Organization, it is marked as **Configured**.
+{% endhint %}
 
+## Obtain and use your Snyk API token
+
+{% hint style="warning" %}
+Before authenticating, be sure you have set your region properly. For details, see [Regional hosting and data residency](../working-with-snyk/regional-hosting-and-data-residency.md), which has the [list of regional URLs](../working-with-snyk/regional-hosting-and-data-residency.md#regional-urls).
+{% endhint %}
+
+Your Snyk API token is a personal token available under your user profile. The Snyk API token is associated with your Snyk Account and not with a specific Organization.
+
+Free and Team plan and trial users have access only to this personal token under the user profile. The personal token can be used to authenticate with the Snyk CLI running on a local or a build machine and an IDE when you are setting a token manually. Use a personal token with caution if you are authenticating with the API or for CI/CD.
+
+To obtain your personal Snyk API token:
+
+1. Log in to Snyk and navigate to your personal **account settings**.&#x20;
+2. In your **General** settings, under API Token, select **click to show**.
+3. Highlight and copy your API key.
+
+If you want a new API token, select **Revoke & Regenerate**, but be aware that this will make the previous API token invalid.
+
+For information on when to use an API token and when to use a service account token, avialble to Enterprise plan users only, see [Authentication for API](../snyk-api/rest-api/authentication-for-api/).
+
+## Import a Project to scan and identify issues
+
+Snyk Projects are items that Snyk scans for issues, for example, a manifest file listing your open-source dependencies.
+
+When you import a Project, Snyk scans that imported Project, and displays the results for you to review.
+
+Importing a Project also does the following:
+
+* Sets Snyk to run a regular scan on that Project for issues. See [Usage settings](../snyk-admin/groups-and-organizations/usage-settings.md).
+* Initiates some automation, especially default Snyk tests on pull and merge requests, which help prevent vulnerabilities from being added to the Project. This automation fails builds according to your conditions and can be disabled or customized in your [integration settings](../scm-ide-and-ci-cd-integrations/snyk-scm-integrations/).
+
+## Set up Snyk AppRisk&#x20;
+
+{% hint style="info" %}
+Snyk AppRisk is available with Enterprise plans. For more information, see [Plans and pricing](https://snyk.io/plans/).
+{% endhint %}
+
+Snyk AppRisk enables Application Security teams to implement, manage, and scale a modern, high-performing, developer security program. It covers use cases under Application Security Posture Management (ASPM).&#x20;
+
+For more information, see [Snyk AppRisk](../scan-with-snyk/snyk-apprisk/).
+
+## Review results and fix your issues
+
+After you have imported a Project, and Snyk has scanned that Project for issues, you can view the results of your scan and take action to fix issues.  You can see the number of issues found, grouped by severity level (**C**ritical, **H**igh, **M**edium or **L**ow). For details, see [Severity levels](../manage-risk/prioritize-issues-for-fixing/severity-levels.md).
+
+The scan results and available actions depend on the type of Project you scan:
+
+* Open-source libraries: see [Snyk Open Source](../scan-with-snyk/snyk-open-source/).
+* Application code: see [Snyk Code](../scan-with-snyk/snyk-code/).
+* Container images: see [Snyk Container](../scan-with-snyk/snyk-container/scan-container-images.md).
+* Infrastructure as Code (IaC), Kubernetes, Helm and Terraform configuration files and cloud misconfigurations: see [Snyk IaC](../scan-with-snyk/snyk-iac/).

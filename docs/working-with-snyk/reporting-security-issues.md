@@ -1,12 +1,14 @@
 # Reporting security issues
 
+Snyk requests that vulnerabilities in a Snyk service be reported according to the process explained on this page.
+
 ## How to report a security issue in a Snyk service
 
 Snyk values the security community and believes that responsible disclosure of security vulnerabilities helps ensure the security and privacy of all users.
 
 If you believe you have found a security vulnerability in any Snyk services, please let Snyk know right away. Snyk will investigate all legitimate reports and strive to fix the problem quickly. Before reporting, though, please review the [Snyk Responsible Disclosure Policy](reporting-security-issues.md#snyk-responsible-disclosure-policy).
 
-Submit your report to [security@snyk.io](mailto:security@snyk.io) (one issue per report) and respond to the report with any updates. Please do not contact Snyk employees directly or through other channels about a security report.&#x20;
+Send your report to [security@snyk.io](mailto:security@snyk.io) (one issue per report) and respond to the report with any updates. Please do not contact Snyk employees directly or through other channels about a security report.&#x20;
 
 ## Snyk Responsible Disclosure Policy
 

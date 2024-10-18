@@ -17,13 +17,9 @@ Snyk Security in Jira Cloud is a Jira app.
 
 To install and configure the Jira app, you must be a Jira Cloud administrator in the site-admins, administrators, or jira-administrators group. Contact your IT team to support your effort in installing the Snyk Security in Jira Cloud app.
 
-To connect the Jira app to Snyk, you must be a [Snyk Organization administrator](../../snyk-admin/manage-permissions-and-roles/pre-defined-roles.md).
+To connect the Jira app to Snyk, you must be a [Snyk Organization administrator](../../snyk-admin/user-roles/pre-defined-roles.md).
 
 To activate Security in Jira Cloud in Jira, navigate to **Project Settings > Features > Development > Security** and toggle **Security** **ON**.&#x20;
-
-{% hint style="warning" %}
-Ensure that the project is _**not**_ of type **Classic**. If you are unable to find **Features** in your project settings, this may be because the project type is **Classic**. In this case, the  project must be rebuilt or migrated to a newer version.
-{% endhint %}
 
 Ensure you have the following permission scopes in Jira, which are required for the integration to operate.
 
@@ -44,7 +40,7 @@ Follow these steps to install [**Snyk Security in Jira Cloud**](https://marketpl
 
 1. Go to **Apps** > **Manage apps.**
 2. In the left menu, select **Snyk Security in Jira**.
-3. [Log in to your Snyk account, or sign up for a new Snyk account](../../getting-started/quickstart/create-or-log-in-to-a-snyk-account.md).
+3. Log in to your Snyk account, or sign up for a new Snyk account.
 4. In Snyk, select **Grant access** to allow Snyk to read your Jira Software account information.
 5. Select the specific Snyk Organizations to connect to your Jira site, and select **Grant app access**.
 
@@ -67,6 +63,12 @@ Developers can now use the security feature to view recent vulnerabilities found
 {% hint style="info" %}
 Only security vulnerabilities will be shown on the Jira Security tab.
 {% endhint %}
+
+### Deleting a target or repository
+
+To delete a target or repository from Snyk that you have connected to Jira, you must first delete the container code repository in Jira, through the **Security** panel in each Jira Project. Then you can remove the target or repository from Snyk.
+
+<figure><img src="../../.gitbook/assets/2024-08-27_14-05-04.png" alt="Remove connected security containers in the Jira Security panel" width="335"><figcaption><p>Remove connected security containers in the Jira Security panel</p></figcaption></figure>
 
 ## Manage security vulnerabilities in Jira
 
@@ -97,6 +99,32 @@ To add a Jira issue, navigate to the Snyk Security tab, find a vulnerability, an
 ### Link an existing Jira issue to a vulnerability
 
 If the vulnerability already has a Jira issue, you can link the vulnerability to the existing Jira issue by clicking the three dots in the Actions column and selecting **Link issue.**
+
+### Auto-close resolved vulnerabilities in security in Jira
+
+These steps describe how to use Jira automation and JQL to automatically close or change the status of tickets for vulnerabilities that are now in a closed state.
+
+1. In Jira on your Project, navigate to **Project Settings** and then **Automation.**
+2. Click he **Create Rule** button.
+3. Click **Scheduled** and then **Scheduled**.
+
+<figure><img src="../../.gitbook/assets/Scheduled View.png" alt="Add Scheduled trigger"><figcaption><p>Add Scheduled trigger</p></figcaption></figure>
+
+4. Select the checkbox that says **`Run a JQL search`** and enter `status != Done AND vulnerability[status] = CLOSED` in the field. Then click **Next**.
+
+<figure><img src="../../.gitbook/assets/scheduled config.png" alt="Set up a scheduled JQL search"><figcaption><p>Set up a scheduled JQL search</p></figcaption></figure>
+
+5. Add a new component and choose **THEN: Add an action**_._ Select **Issue actions**`and`choose **Transition issue**.
+
+<figure><img src="../../.gitbook/assets/transition issue.png" alt="Transition issue action"><figcaption><p>Transition issue action</p></figcaption></figure>
+
+5. Set the **Destination statu**_s_ to `Done` or another status depending on your workflow.
+
+<figure><img src="../../.gitbook/assets/destination.png" alt="Set up the transition to Done status"><figcaption><p>Set up the transition to Done status</p></figcaption></figure>
+
+6. Now that the setup is complete, give it a name and click on **Turn on rule.**
+
+Now, according to your schedule, Jira will search for any issues for which the vulnerability is closed, but the issues are not closed, and close each Jira issue.
 
 ## Uninstall Snyk Security in Jira Cloud
 

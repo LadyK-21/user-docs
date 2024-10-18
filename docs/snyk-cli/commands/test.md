@@ -63,13 +63,13 @@ Example: `--detection-depth=3` limits search to the specified directory (or the 
 
 ### `--exclude=<NAME>[,<NAME>]...>`
 
-Can be used with `--all-projects` and `--yarn-workspaces` to indicate directory names and file names to exclude. Must be comma-separated, and cannot include a path.&#x20;
+Can be used with `--all-projects` and `--yarn-workspaces` to indicate directory names and file names to exclude. Must be comma-separated, and cannot include a path.
 
 Example: `$ snyk test --all-projects --exclude=dir1,file2`
 
 This will exclude any directories and files named `dir1` and `file2` when scanning for project manifest files such as: `./dir1`, `./src/dir1`, `./file2`, `./src/file2` and so on.
 
-**Note**: `--exclude=dir1` will find both  `./dir1`, and `./src/dir1`.\
+**Note**: `--exclude=dir1` will find both `./dir1`, and `./src/dir1`.\
 However, `--exclude=./src/dir1` will result in an error because it includes a path.
 
 ### `--prune-repeated-subdependencies`, `-p`
@@ -114,7 +114,7 @@ Default: `<ORG_ID>` that is the current preferred Organization in your [Account 
 
 **Note:** You can also use `--org=<orgslugname>.` The `ORG_ID` works in both the CLI and the API. The Organization slug name works in the CLI, but not in the API.
 
-`orgslugname` must match the slug name as displayed in the URL of your org in the Snyk UI: `https://snyk.io/org/[orgslugname]`. The orgname does not work.
+`orgslugname` must match the slug name as displayed in the URL of your org in the Snyk UI: `https://app.snyk.io/org/[orgslugname]`. The orgname does not work.
 
 For more information see the article [How to select the Organization to use in the CLI](https://docs.snyk.io/snyk-cli/scan-and-maintain-projects-using-the-cli/how-to-select-the-organization-to-use-in-the-cli)
 
@@ -122,7 +122,7 @@ For more information see the article [How to select the Organization to use in t
 
 Specify a package file.
 
-When testing locally or monitoring a project, you can specify the file that Snyk should inspect for package information. When the file is not specified, Snyk tries to detect the appropriate file for your project.
+When you are testing locally or monitoring a project, you can specify the file that Snyk should inspect for package information. When the file is not specified, Snyk tries to detect the appropriate file for your project.
 
 See also the section on [Options for Python projects](https://docs.snyk.io/snyk-cli/commands/test#options-for-python-projects)
 
@@ -244,7 +244,7 @@ To test individual JAR, WAR, and AAR files, use the following:
 
 ### `--scan-all-unmanaged`
 
-Auto-detect Maven, JAR, WAR, and AAR files recursively from the current folder.&#x20;
+Auto-detect Maven, JAR, WAR, and AAR files recursively from the current folder.
 
 `--scan-all-unmanaged`
 
@@ -260,9 +260,9 @@ For Gradle multi project configurations, test a specific sub-project.
 
 ### `--all-sub-projects`
 
-For multi project configurations, test all sub-projects.  \
+For multi project configurations, test all sub-projects.\
 \
-Both a build.gradle file and a settings.gradle file, or equivalent files, based on the package manager, must exist in the current directory.&#x20;
+Both a build.gradle file and a settings.gradle file, or equivalent files, based on the package manager, must exist in the current directory.
 
 ### `--all-projects`
 
@@ -276,7 +276,7 @@ This option is designed to be run in the root of your monorepo.
 
 ### `--configuration-matching=<CONFIGURATION_REGEX>`
 
-Resolve dependencies using only configuration(s) that match the specified Java regular expression.
+Resolve dependencies using the first configuration that matches the specified Java regular expression.
 
 Example: `^releaseRuntimeClasspath$`
 
@@ -368,6 +368,28 @@ If there are out-of-sync lockfiles in the project, the `test` command fails when
 
 Default: true
 
+## Options for pnpm projects
+
+**Snyk CLI pnpm support is in Early Access**. To enable it, in your Snyk account navigate to Settings, select Snyk Preview, and install CLI v1.1293.0 or above.
+
+**Note**: You can use the following options with pnpm projects:
+
+`--dev`. See the [`--dev` option help](https://docs.snyk.io/snyk-cli/commands/test#dev)
+
+`--all-projects` to scan and detect pnpm projects and all other projects in the directory. See the [`--all-projects` option help](https://docs.snyk.io/snyk-cli/commands/test#all-projects)
+
+`--fail-on`. See the [--fail-on option help](https://docs.snyk.io/snyk-cli/commands/test#fail-on-less-than-all-or-upgradable-or-patchable-greater-than)
+
+`--prune-repeated-subdependencies, -p`. See the [`--prune-repeated subdependencies` option help](https://docs.snyk.io/snyk-cli/commands/test#prune-repeated-subdependencies-p)
+
+### `--strict-out-of-sync=true|false`
+
+Prevent testing out-of-sync lockfiles.
+
+If there are out-of-sync lockfiles in the project, the `test` command fails when `--strict-out-of-sync=true`.
+
+Default: true
+
 ## Options for Yarn projects
 
 **Note**: You can use the following options with Yarn projects:
@@ -388,7 +410,7 @@ Default: true
 
 ### `--yarn-workspaces`
 
-Detect and scan Yarn Workspaces only when a lockfile is in the root.
+Detect and scan only Yarn Workspaces when a lockfile is in the root.
 
 You can specify how many sub-directories to search using `--detection-depth.`
 
@@ -426,9 +448,15 @@ For a Python project, specify a particular file to test.
 
 Default: Snyk scans the requirements.txt file at the top level of the project.
 
-Snyk can recognize any manifest files specified with this option based on `--file=req*.txt`. The `*` is a wildcard and `req` can appear anywhere in the file name.
+**Important:** When specifying a value for the `--file` parameter that is not the default file, you must also include the `--package-manager=pip` option. The test will fail without this parameter.
 
-For example, Snyk recognizes your manifest file when you have renamed it to `requirements-dev.txt`.
+Always specify this parameter with the value `pip` when using a custom `--file` value. For example:
+
+```bash
+snyk test --file=requirements-dev.txt --package-manager=pip
+```
+
+This allows Snyk to correctly recognize and scan your specified manifest file, such as when you have renamed it to `requirements-dev.txt`.
 
 ### `--package-manager=pip`
 
