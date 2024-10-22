@@ -6,3 +6,11 @@ This document uses the REST API. For more details, see the [Authentication for A
 {% swagger src="../../.gitbook/assets/rest-spec.json" path="/self" method="get" %}
 [spec.yaml](../../.gitbook/assets/rest-spec.json)
 {% endswagger %}
+
+{% swagger src="../../.gitbook/assets/rest-spec.json" path="/orgs/{org_id}/users/{id}" method="get" %}
+[spec.yaml](../../.gitbook/assets/rest-spec.json)
+{% endswagger %}
+
+{% swagger src="../../.gitbook/assets/rest-spec.json" path="/groups/{group_id}/users/{id}" method="patch" %}
+[spec.yaml](../../.gitbook/assets/rest-spec.json)
+{% endswagger %}
