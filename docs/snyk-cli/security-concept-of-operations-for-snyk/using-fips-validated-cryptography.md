@@ -13,7 +13,7 @@ Support for use of FIPS-validated cryptography is limited to the Windows and Lin
 
 ## FIPS-validated cryptography support and use in the Snyk CLI and Snyk Language Server
 
-To optimize the developer experience, Snyk is combining the [Snyk Language Server](../../integrate-with-snyk/use-snyk-in-your-ide/snyk-language-server.md) and the [Snyk CLI](../getting-started-with-the-snyk-cli.md). As a first step, Snyk is bringing FIPS binaries under one application. Later also non-FIPS CLI binaries will be used for Snyk Language Server.
+To optimize the developer experience, Snyk is combining the [Snyk Language Server](../../scm-ide-and-ci-cd-integrations/snyk-ide-plugins-and-extensions/snyk-language-server/) and the [Snyk CLI](../getting-started-with-the-snyk-cli.md). As a first step, Snyk is bringing FIPS binaries under one application. Later also non-FIPS CLI binaries will be used for Snyk Language Server.
 
 The Snyk Language Server can now be executed as a CLI command.
 
@@ -44,11 +44,11 @@ For testing, FIPS can be enabled using the following registry key   `HKLM\SYSTEM
 
 #### Download FIPS-enabled binaries
 
-Snyk binaries are available with and without FIPS support. They are all hosted on static.snyk.io, differentiated by their Base URL.
+Snyk binaries are available with and without FIPS support. They are all hosted on downloads.snyk.io, differentiated by their Base URL.
 
-**FIPS Base URL:** https://static.snyk.io/fips/
+**FIPS Base URL:** https://downloads.snyk.io/fips/
 
-**Regular Base URL:** https://static.snyk.io/
+**Regular Base URL:** https://downloads.snyk.io/
 
 All instructions on [how to install and use Snyk](../install-or-update-the-snyk-cli/) remain the same. The only required change is using the appropriate Base URL.
 
@@ -59,7 +59,7 @@ The example that follows uses a [Microsoft Mariner](https://mcr.microsoft.com/en
 ```bash
 docker run -it mcr.microsoft.com/cbl-mariner/base/core:2.0 bash
 > tdnf install -y ca-certificates
-> curl --compressed https://static.snyk.io/fips/cli/latest/snyk-linux-arm64 -o snyk
+> curl --compressed https://downloads.snyk.io/fips/cli/latest/snyk-linux-arm64 -o snyk
 > chmod +x snyk
 > ./snyk -d
 ...
@@ -77,7 +77,7 @@ docker run -it mcr.microsoft.com/cbl-mariner/base/core:2.0 bash
 
 ### Visual Studio Code
 
-To make use of FIPS-validated cryptography in the [Snyk Visual Studio Code integration](../../integrate-with-snyk/use-snyk-in-your-ide/visual-studio-code-extension/), do the following:
+To make use of FIPS-validated cryptography in the [Snyk Visual Studio Code integration](../../scm-ide-and-ci-cd-integrations/snyk-ide-plugins-and-extensions/visual-studio-code-extension/), do the following:
 
 * Ensure the [prerequisites](using-fips-validated-cryptography.md#prerequisites-for-fips-cryptography-in-the-cli-and-snyk-language-server) are met.
 * [Download the appropriate FIPS-enabled binaries](using-fips-validated-cryptography.md#download-fips-enabled-binaries).
@@ -86,7 +86,7 @@ To make use of FIPS-validated cryptography in the [Snyk Visual Studio Code integ
 
 ### Eclipse
 
-To make use of FIPS-validated cryptography in the [Snyk Eclipse integration](../../integrate-with-snyk/use-snyk-in-your-ide/eclipse-plugin/), do the following:
+To make use of FIPS-validated cryptography in the [Snyk Eclipse integration](../../scm-ide-and-ci-cd-integrations/snyk-ide-plugins-and-extensions/eclipse-plugin/), do the following:
 
 * Ensure the [prerequisites](using-fips-validated-cryptography.md#prerequisites-for-fips-cryptography-in-the-cli-and-snyk-language-server) are met
 * [Download the appropriate FIPS-enabled binaries.](using-fips-validated-cryptography.md#download-fips-enabled-binaries)
@@ -96,7 +96,7 @@ To make use of FIPS-validated cryptography in the [Snyk Eclipse integration](../
 
 ### JetBrains
 
-To make use of FIPS-validated cryptography in the [Snyk JetBrains integration](../../integrate-with-snyk/use-snyk-in-your-ide/jetbrains-plugins/), do the following:
+To make use of FIPS-validated cryptography in the [Snyk JetBrains integration](../../scm-ide-and-ci-cd-integrations/snyk-ide-plugins-and-extensions/jetbrains-plugins/), do the following:
 
 * Ensure the [prerequisites](using-fips-validated-cryptography.md#prerequisites-for-fips-cryptography-in-the-cli-and-snyk-language-server) are met.
 * [Download the appropriate FIPS-enabled binaries](using-fips-validated-cryptography.md#download-fips-enabled-binaries).
@@ -106,7 +106,7 @@ To make use of FIPS-validated cryptography in the [Snyk JetBrains integration](.
 
 ### Visual Studio
 
-To make use of FIPS-validated cryptography in the [Snyk Visual Studio integration](../../integrate-with-snyk/use-snyk-in-your-ide/visual-studio-extension/) do the following:
+To make use of FIPS-validated cryptography in the [Snyk Visual Studio integration](../../scm-ide-and-ci-cd-integrations/snyk-ide-plugins-and-extensions/visual-studio-extension/) do the following:
 
 * Ensure the [prerequisites](using-fips-validated-cryptography.md#prerequisites-for-fips-cryptography-in-the-cli-and-snyk-language-server) are met.
 * [Download the appropriate FIPS-enabled binaries](using-fips-validated-cryptography.md#download-fips-enabled-binaries).
@@ -115,8 +115,8 @@ To make use of FIPS-validated cryptography in the [Snyk Visual Studio integratio
 
 ## FIPS-validated cryptography support and use in CI/CD Integrations
 
-FIPS in [CI/CD Integrations](../../integrate-with-snyk/snyk-ci-cd-integrations/) is available only by using a FIPS-enabled CLI directly.
+FIPS in [CI/CD Integrations](../../scm-ide-and-ci-cd-integrations/snyk-ci-cd-integrations/) is available only by using a FIPS-enabled CLI directly.
 
 ## FIPS-validated cryptography support and use in Package Repositories
 
-The [Snyk Nexus Repository Manager Gatekeeper plugin](../../scan-using-snyk/snyk-open-source/manage-vulnerabilities/gatekeeper-plugins/nexus-repository-manager-gatekeeper-plugin.md) and the [Artifactory Gatekeeper plugin](../../scan-using-snyk/snyk-open-source/manage-vulnerabilities/gatekeeper-plugins/artifactory-gatekeeper-plugin.md) use the Snyk API and run on a Java VM. To make use of FIPS-validated cryptography, configure the Java Runtime to use a FIPS-validated[ JCE (Java Cryptography Extension)](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic\&ModuleName=java\&CertificateStatus=Active\&ValidationYear=0).
+The [Snyk Nexus Repository Manager Gatekeeper plugin](../../scan-with-snyk/snyk-open-source/manage-vulnerabilities/gatekeeper-plugins/nexus-repository-manager-gatekeeper-plugin.md) and the [Artifactory Gatekeeper plugin](../../scan-with-snyk/snyk-open-source/manage-vulnerabilities/gatekeeper-plugins/artifactory-gatekeeper-plugin.md) use the Snyk API and run on a Java VM. To make use of FIPS-validated cryptography, configure the Java Runtime to use a FIPS-validated[ JCE (Java Cryptography Extension)](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic\&ModuleName=java\&CertificateStatus=Active\&ValidationYear=0).

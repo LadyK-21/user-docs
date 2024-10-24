@@ -8,7 +8,15 @@ See [Snyk Advisor](https://snyk.io/advisor/).
 
 ### **Asset (Snyk AppRisk)**
 
-A Snyk AppRisk asset is an identifiable entity that is part of an application, and relevant for security and developers.
+A Snyk AppRisk asset is an identifiable entity that is part of an application, and relevant for security and developers. Snyk is generally focused on the development stages of application software, secures repository assets containing software package assets, and builds artifacts like container image assets.
+
+### Application (Snyk AppRisk)
+
+An application is software that serves a business purpose and consists of assets that form the app. Organizations often define the scope of an application differently.
+
+### Application Graph
+
+Represents the mapping of security issues, application assets, relationships between assets, and all relevant contextual information.&#x20;
 
 ## B
 
@@ -18,17 +26,21 @@ The parent image used to construct a container image, usually defined in the `FR
 
 ### Broker
 
-See [Snyk Broker](../enterprise-configuration/snyk-broker/).
+See [Snyk Broker](../enterprise-setup/snyk-broker/).
 
 ### Build System
 
 A system that takes the source code and builds the deployable application (such as a container).
 
+### Business context
+
+Information related to the organization's objectives, priorities, and regulatory requirements, such as criticality of the application to the business, compliance standards, data sensitivity, and potential impact on revenue or reputation.
+
 ## C
 
 ### CI/CD
 
-Continuous integration (CI), continuous delivery (CD), and continuous deployment (CD) together comprise a Software Development Lifecycle (SDLC) model, guiding developers to automate the development and delivery of small, frequent changes. This ensures all team members have access to the latest codebase and can ensure the compatibility of committed code during development. See [Snyk CI/CD](../integrate-with-snyk/snyk-ci-cd-integrations/) for details of Snyk CI/CD integrations.
+Continuous integration (CI), continuous delivery (CD), and continuous deployment (CD) together comprise a Software Development Lifecycle (SDLC) model, guiding developers to automate the development and delivery of small, frequent changes. This ensures all team members have access to the latest codebase and can ensure the compatibility of committed code during development. See [Snyk CI/CD](../scm-ide-and-ci-cd-integrations/snyk-ci-cd-integrations/) for details of Snyk CI/CD integrations.
 
 ### **Class (Snyk AppRisk)**
 
@@ -42,6 +54,10 @@ Command Line Interface. See [Snyk CLI](glossary.md#snyk-cli).
 
 Implementing security throughout the CI/CD pipeline, automating security embedding in microservices, and maximizing repetition to reduce the introduction of vulnerabilities. Snyk provides a comprehensive [CNAS platform](https://snyk.io/product/cloud-native-application-security/).\
 See the article [Cloud-native security guide for building secure applications](https://snyk.io/learn/cloud-native-security-for-cloud-native-applications/).
+
+### Code assets (Snyk AppRisk)
+
+A hierarchical list of all assets retrieved from the scanned repositories.
 
 ### Container
 
@@ -59,13 +75,17 @@ One or more files that, when instantiated by a container engine or runtime, prov
 
 A server that provides a mechanism to store and retrieve container images.
 
-### **Controls (Snyk AppRisk)**&#x20;
+### **Controls (Snyk AppRisk)**
 
 The security controls associated with the asset. Navigate to the Snyk AppRisk Controls section to see all available statuses for security controls.
 
 ### **Coverage (Snyk AppRisk)**
 
 An assessment of whether applicable assets are scanned and tested by security tools (like Snyk Open Source, for instance), as it relates to an application security program. A type of policy that allows you to specify what controls should be applied and, optionally, how often it needs to be run.
+
+### Coverage gap (Snyk AppRisk)
+
+An assessment of all assets that fall "out of policy" and do not satisfy the coverage criteria you have specified, due to infrequent scanning or no scanning at all.
 
 ### CVE
 
@@ -83,7 +103,7 @@ Common Weakness Enumeration. An online glossary that categorizes software and ha
 
 ### DAST
 
-Dynamic Application Security Testing. An application that you can point at a site or service; it then typically profiles the site or service, then examines the output and behavior to uncover security vulnerabilities. See also [SAST](glossary.md#sast).
+Dynamic Application Security Testing. A security analysis technique that tests a running application from the outside to find security issues. See also[ IAST](glossary.md#iast) and [SAST](glossary.md#sast).
 
 ### Dependency
 
@@ -95,6 +115,10 @@ When your application uses another package, this other package becomes a depende
 ### Dependency tree
 
 Also known as Dependency path. A hierarchical graph showing the dependencies of a software application. This includes both direct and indirect dependencies and thus may be many levels deep.
+
+### Development context
+
+Information and requirements surrounding the development of applications within an organization, such as ownership, development tools, environments, teams, workflows, and processes.
 
 ### DevOps
 
@@ -130,7 +154,7 @@ A measure of whether a vulnerability can be fixed by Sny by applying a patch, up
 
 ### Fix PR
 
-A pull request with an automatic fix for discovered vulnerabilities that Snyk can offer the user. See [Automated fix PRs](../scan-with-snyk/pull-requests/snyk-fix-pull-or-merge-requests/create-automatic-fix-prs-for-backlog-issues-and-known-vulnerabilities.md).
+A pull request with an automatic fix for discovered vulnerabilities that Snyk can offer the user. See [Automated fix PRs](../scan-with-snyk/pull-requests/snyk-pull-or-merge-requests/create-automatic-prs-for-backlog-issues-and-known-vulnerabilities-backlog-prs.md).
 
 ## G
 
@@ -146,7 +170,7 @@ Infrastructure as Code. See [Snyk Infrastructure as Code.](glossary.md#snyk-infr
 
 ### IAST
 
-Interactive Application Security Testing. This approach tests for vulnerabilities while running the application. See [DAST](glossary.md#dast) and [SAST](glossary.md#sast).
+Interactive Application Security Testing. A runtime analysis tool that focuses on code behavior during execution to determine behaviors of interest to you, for example, what packages are loaded, where data flows in the running application, or how end users interact with the application. Capabilities vary between vendors and products. IAST works with a running application to analyze it internally by using sensors or agents placed within the application's runtime environment. IAST offers more detailed insights than [DAST](glossary.md#dast), for example, by tracing the source of vulnerabilities in the code. See also [SAST](glossary.md#sast).
 
 ### IDE
 
@@ -167,6 +191,18 @@ Third-party products, applications, and platforms that Snyk works with, for exam
 ### Issue
 
 A license problem, vulnerability, or misconfiguration identified and listed by Snyk. See [Find and manage priority issues](../manage-risk/prioritize-issues-for-fixing/).
+
+### Issue (Snyk AppRisk)
+
+An issue is a security problem identified by a Snyk security product when testing an asset, that AppSec teams need to remediate.
+
+### Issues prioritization (Snyk AppRisk)
+
+Provides a centralized view of all the issues identified by Snyk with additional asset context. This empowers AppSec teams to better triage and remediate issues in Snyk.
+
+### Issue context (Snyk AppRisk)
+
+Information surrounding a particular security issue that serves as objective risk factors such as issue severity level, availability of a fix, exploit maturity.
 
 ## L
 
@@ -208,6 +244,10 @@ The identifier for the ecosystem that a Target exists in. Snyk can scan Projects
 
 A group of files and additional metadata about those files, used by package managers.
 
+### Package assets (Snyk AppRisk)
+
+Package assets are created when you scan the dependencies of a Project through package management systems or by using the Snyk CLI. This enables Snyk AppRisk to identify and analyze the security vulnerabilities of the packages used within a Project, offering insights into possible risk exposures and providing recommendations for mitigation.
+
 ### Package manager
 
 A set of tools that automate and manage packages of bundled files, and are usually specific to a language. For example, npm.
@@ -218,7 +258,7 @@ A software package hosting service that allows customers to host packages and co
 
 ### Pinnable
 
-A fix type: define and "pin" a specific version of an indirect dependency, to avoid a direct dependency pulling in a vulnerable version.
+A fix type. Define and "pin" a specific version of an indirect dependency, to avoid a direct dependency pulling in a vulnerable version.
 
 ### Policy
 
@@ -226,7 +266,7 @@ See [license policy](glossary.md#license-policy), [security policy](glossary.md#
 
 ### **Policy (Snyk AppRisk)**
 
-&#x20;A way to automate actions in certain conditions, like classifying and tagging assets with business context. You can also use a policy to configure actions like sending a message or setting the coverage gap control using a Policy builder UI.
+A way to automate actions in certain conditions, like classifying and tagging assets with business context. You can also use a policy to configure actions like sending a message or setting the coverage gap control using a Policy builder UI.
 
 ### PR
 
@@ -238,7 +278,7 @@ Use Snyk PR Checks to prevent new security issues from entering your codebase by
 
 ### Priority Score
 
-Snyk scores issues, including vulnerabilities and licenses for Open Source, to help prioritize the treatment of each one. Scores are based on multiple factors including the CVSS score and range from 0 (low) to 1000 (high). See [Priority Score](../manage-risk/prioritize-issues-for-fixing/priority-score.md).
+Snyk scores issues, including vulnerabilities and licenses for Open Source, to help prioritize the treatment of each one. Scores are based on multiple factors, including the CVSS score, and range from 0 (low) to 1000 (high). See [Priority Score](../manage-risk/prioritize-issues-for-fixing/priority-score.md).
 
 ### Project
 
@@ -248,7 +288,7 @@ An external item scanned by Snyk with configuration to define how to run that sc
 
 ### Reachability
 
-Whether an application contains code that will hit a vulnerable code path during execution. See [Reachable vulnerabilities](../manage-risk/prioritize-issues-for-fixing/reachable-vulnerabilities.md).
+Whether an application contains code that will hit a vulnerable code path during execution. See [Reachable vulnerabilities](../manage-risk/prioritize-issues-for-fixing/reachability-analysis.md).
 
 ### Registry
 
@@ -258,9 +298,17 @@ See [Container registry](glossary.md#container-registry) or [Package registry](g
 
 A storage area that contains all elements necessary for the distribution of an application.
 
+### Repository assets (Snyk AppRisk)
+
+A repository asset is created by discovering the repositories directly in the SCM, when such integration is configured. Alternatively, a repository asset can be created by scanning a repository, (by Snyk or third-party tools) as long as the scanned code is identified with a specific repository.
+
 ### Resource
 
 A cloud infrastructure entity such as an AWS S3 bucket, Identity and Access Management (IAM) role, or Virtual Private Cloud (VPC) flow log.
+
+### Risk-based prioritization **(Snyk AppRisk)**
+
+Assess the risk for each app based on the application context and conduct best-in-class security analysis. Provide fix guidance to direct developer remediation efforts towards the most critical business issues.
 
 ### Risk score
 
@@ -270,6 +318,10 @@ A value assigned to an issue, ranging from 0 to 1,000, representing the risk imp
 
 A security policy that checks cloud infrastructure and infrastructure as code (IaC) for misconfigurations that can lead to security problems, or a security rule used by Snyk Code when scanning your source code for vulnerabilities. For more information, see [Snyk Code security rules](../scan-with-snyk/snyk-code/snyk-code-security-rules/) and [IaC custom rules](../scan-with-snyk/snyk-iac/build-your-own-iac-custom-rules/).
 
+### Runtime context (Snyk AppRisk)
+
+Information on where and how an application is running.
+
 ## S
 
 ### SARIF
@@ -278,7 +330,7 @@ Static Analysis Results Interchange Format. A standard, JSON-based format for th
 
 ### SAST
 
-Static Application Security Testing. A method to secure software by reviewing the source code of your proprietary software and identifying sources of vulnerabilities. See also [DAST](glossary.md#dast).
+Static Application Security Testing. A security analysis technique that examines static source code to identify potential vulnerabilities without running the application. See also [IAST](glossary.md#iast), [DAST](glossary.md#dast), [Snyk Code](glossary.md#snyk-code), and [Snyk Infrastructure as Code](glossary.md#snyk-infrastructure-as-code).
 
 ### SBOM
 
@@ -286,11 +338,19 @@ Software Bill Of Materials. A list of components in a piece of software.
 
 ### SCA
 
-Software Composition Analysis. A technology that is used to identify open-source and third-party components in use in an application, including their known security vulnerabilities, and typically adversarial license restrictions. See also [Static Code Analysis](glossary.md#static-code-analysis).
+Software Composition Analysis. A security analysis technique that is used to identify open-source and third-party components in use in an application, their known security vulnerabilities, and typically also adversarial license restrictions. Not to be confused with [Static Code Analysis](glossary.md#static-code-analysis). See also [Snyk Open Source](glossary.md#snyk-open-source).
+
+### Scanned artifacts (Snyk AppRisk)
+
+A scanned artifact in Snyk AppRisk is an entity detected by Snyk that cannot be identified as a repository asset because it does not include identifying information, such as a Git remote URL.
 
 ### SCM
 
-Source Code Management. Also known as a code repository (repo) or version control system. The method used by developers to store their source code and track changes to code. SCM helps resolve conflicts when merging updates from multiple contributors. GitHub is an example of a common SCM system. See [Git repositories (SCMs)](../integrate-with-snyk/git-repositories-scms-integrations-with-snyk/).
+Source Code Management. Also known as a code repository (repo) or version control system. The method used by developers to store their source code and track changes to code. SCM helps resolve conflicts when merging updates from multiple contributors. GitHub is an example of a common SCM system. See [Git repositories (SCMs)](../scm-ide-and-ci-cd-integrations/snyk-scm-integrations/).
+
+### SCM Repository freshness (Snyk AppRisk)
+
+The SCM Repository freshness provides an immediate understanding of the current status of your repositories, including the date of the last commit. This assists you in quickly identifying active and dormant Projects and helps you with the decision-making regarding maintenance, security patching, and resource allocation. Reflects the status of the repository and the date of the last commit.
 
 ### SDLC
 
@@ -326,11 +386,11 @@ A Snyk tool that enables developers to integrate programmatically with Snyk. See
 
 ### Snyk Apps
 
-Snyk Apps are the modern and preferred way to build integrations with Snyk, exposing fine-grained scopes for accessing resources over the Snyk APIs, powered by OAuth 2.0 for a developer-friendly experience. See [Snyk Apps](../snyk-api-info/snyk-apps/).
+Snyk Apps are the modern and preferred way to build integrations with Snyk, exposing fine-grained scopes for accessing resources over the Snyk APIs, powered by OAuth 2.0 for a developer-friendly experience. See [Snyk Apps](../snyk-api/how-to-use-snyk-apps-apis/).
 
 ### Snyk Broker
 
-A client/server system that serves as an agent or proxy, allowing Snyk to scan private customer environments: Jira, code repositories, or container registries. Snyk Broker relays messages and allows users to filter which messages are allowed through,  for example, allowing users to expose only some GitHub APIs to Snyk. See [Snyk Broker](../enterprise-configuration/snyk-broker/).
+A client/server system that serves as an agent or proxy, allowing Snyk to scan private customer environments: Jira, code repositories, or container registries. Snyk Broker relays messages and allows users to filter which messages are allowed through, for example, allowing users to expose only some GitHub APIs to Snyk. See [Snyk Broker](../enterprise-setup/snyk-broker/).
 
 ### Snyk CLI
 
@@ -346,7 +406,7 @@ A Snyk product. Enables developers to find and fix vulnerabilities in container 
 
 ### Snyk Infrastructure as Code
 
-A Snyk product. Enables developers to find and fix vulnerabilities in Kubernetes, Helm, and Terraform configuration files. See [Snyk Infrastructure as Code](../scan-with-snyk/snyk-iac/scan-your-iac-source-code/).
+A Snyk product. Enables developers to find and fix vulnerabilities in Kubernetes, Helm, and Terraform configuration files. See [Snyk IaC](../scan-with-snyk/snyk-iac/).
 
 ### Snyk Open Source
 
@@ -367,7 +427,7 @@ The browser-based environment that provides users access to Snyk functions. See 
 
 ### Social Trends
 
-Snyk shows a Trending banner on issues that are being actively discussed on X (formerly known as Twitter). See  [Vulnerabilities with Social Trends](../manage-risk/prioritize-issues-for-fixing/vulnerabilities-with-social-trends.md).
+Snyk shows a Trending banner on issues that are being actively discussed on X (formerly known as Twitter). See [Vulnerabilities with Social Trends](../manage-risk/prioritize-issues-for-fixing/vulnerabilities-with-social-trends.md).
 
 ### Source
 
@@ -379,7 +439,7 @@ Software Package Data Exchange. A file format used to document information on th
 
 ### Static Code Analysis
 
-A method of debugging by examining source code before a program is run. See also [SCA, Software Composition Analysis](glossary.md#sca).
+A technique for examining source code to identify issues related to code quality, structure, or performance, such as determining code reachability or spotting potential inefficiencies. While this technique may touch on security concerns, its primary focus is often broader, covering various aspects of code health. In contrast, Static Application Security Testing ([SAST](glossary.md#sast)) specifically targets the identification of security vulnerabilities within the code, such as coding flaws that could lead to security risks.
 
 ## T
 
@@ -407,8 +467,14 @@ A security vulnerability that was identified by Snyk. See [Manage vulnerabilitie
 
 ### Webhook
 
-A way for an app to provide other applications with real-time information. Snyk uses webhooks to check changes in code. See [Snyk Webhooks](../snyk-api-info/snyk-webhooks/).
+A way for an app to provide other applications with real-time information. Snyk uses webhooks to check changes in code. See [Snyk Webhooks](../snyk-api/how-to-use-snyk-webhooks-apis/).
 
 ### Web UI
 
 See [Snyk Web UI](glossary.md#snyk-web-ui).
+
+### Workspaces (SCM integrations)
+
+A Snyk feature. This enables Snyk to ingest shallow copies of your Git repositories for scanning, resulting in precise and reliable vulnerability scans.
+
+See [Workspaces for SCM integrations](../scm-ide-and-ci-cd-integrations/snyk-scm-integrations/introduction-to-git-repository-integrations/workspaces-for-scm-integrations.md).

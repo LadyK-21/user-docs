@@ -1,16 +1,13 @@
 # Project tags
 
-{% hint style="warning" %}
-**Release status**&#x20;
-
-Project tags are available only for Enterprise plans.
-
-See [Pricing plans](https://snyk.io/plans).
+{% hint style="info" %}
+**Feature availability**\
+Project tags are available only for Enterprise plans. For more information, see [Plans and pricing](https://snyk.io/plans).
 {% endhint %}
 
 ## Project tags use and conditions
 
-### Using tags in the Web UI
+### Using tags in the Web UI, API, and CLI
 
 {% hint style="info" %}
 Group and Organization admins can perform the actions explained on this page. Collaborators can perform the actions if they are in an Organization that is part of the Group.
@@ -20,7 +17,7 @@ The Project tags feature allows you to add custom metadata to Snyk Projects. You
 
 You can perform these actions in the Snyk Web UI, as shown on this page.
 
-You can [Add a tag to a Project](https://snyk.docs.apiary.io/#reference/projects/project-tags/add-a-tag-to-a-project) and  [Remove a tag from a Project ](https://snyk.docs.apiary.io/#reference/projects/remove-project-tag/remove-a-tag-from-a-project)in the Snyk API v1. You can also [List all tags in a Group](https://snyk.docs.apiary.io/#reference/groups/list-members-in-a-group) using the Snyk API v1.
+You can also perform these actions using the API endpoints [Add a tag to a Project](../../snyk-api/reference/projects-v1.md#org-orgid-project-projectid-tags), [Remove a tag from a Project](../../snyk-api/reference/projects-v1.md#org-orgid-project-projectid-tags-remove), and  [List all tags in a Group](../../snyk-api/reference/groups-v1.md#group-groupid-tags).
 
 You can set values for a tag applied to a Project and clear the Project tags using the Snyk CLI option `--project-tags`. See the [CLI commands and options summary](../../snyk-cli/cli-commands-and-options-summary.md) for the commands that support this option.
 
@@ -62,12 +59,12 @@ After you create a tag, it can be applied to other Projects in the Snyk Group.
 
 ## How to delete tags
 
-To delete a Project tag from the Group, use the  [Delete a tag from a Group](https://snyk.docs.apiary.io/#reference/groups/delete-tag-from-group/delete-tag-from-group) endpoint in the Snyk API v1. You can also [List all tags in a Group](https://snyk.docs.apiary.io/#reference/groups/list-members-in-a-group) using the Snyk API v1.
+To delete a Project tag from the Group, use the API endpoint [Delete a tag from a Group](../../snyk-api/reference/groups-v1.md#group-groupid-tags).
 
-The [Delete a tag from a Group](https://snyk.docs.apiary.io/#reference/groups/delete-tag-from-group/delete-tag-from-group) endpoint has the option in the Body to specify `"force": false` or `"force": true`_._ If you specify `"force": true`, the tag will be removed from any Projects to which it is applied, and it will then be deleted. If you specify `"force": false` and the tag is still applied to any Projects, error 403 “the tag has entities” occurs. Otherwise, tag deletion should succeed.&#x20;
+This endpoint has the option in the Body to specify `"force": false` or `"force": true`_._ If you specify `"force": true`, the tag will be removed from any Projects to which it is applied, and it will then be deleted. If you specify `"force": false` and the tag is still applied to any Projects, error 403 “the tag has entities” occurs. Otherwise, tag deletion should succeed.&#x20;
 
 {% hint style="info" %}
-A tag will only exist if it has been created and applied to a Project or Projects. If a tag is
+A tag will only exist if it has been created and applied to one or more Projects. If a tag is
 
 removed from all Projects, it will no longer exist.
 {% endhint %}
