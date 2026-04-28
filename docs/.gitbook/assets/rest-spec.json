@@ -1547,6 +1547,18 @@
           "type": "string"
         }
       },
+      "QueryExpand": {
+        "description": "Expand the response with additional fields. When set to `count`, the response will include a `meta` object containing a `total_count` field with the total number of organizations in the group, ignoring any filters applied to the original query.",
+        "in": "query",
+        "name": "expand",
+        "schema": {
+          "enum": [
+            "count"
+          ],
+          "example": "count",
+          "type": "string"
+        }
+      },
       "QueryNameFilter": {
         "description": "Only return organizations whose name contains this value. Case insensitive.",
         "in": "query",
@@ -17609,6 +17621,23 @@
         ],
         "type": "object"
       },
+      "ListOrgsInGroupMeta": {
+        "additionalProperties": false,
+        "description": "Additional information about the list of organizations. Only populated when `expand=count` is supplied as a query parameter.",
+        "properties": {
+          "total_count": {
+            "description": "The total number of organizations in the group, ignoring any filters applied to the original query. Excludes soft-deleted organizations.",
+            "example": 42,
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total_count"
+        ],
+        "type": "object"
+      },
       "ListRepositoryAliasesResponse": {
         "additionalProperties": false,
         "properties": {
@@ -33450,6 +33479,9 @@
           },
           {
             "$ref": "#/components/parameters/QuerySlugFilter"
+          },
+          {
+            "$ref": "#/components/parameters/QueryExpand"
           }
         ],
         "responses": {
@@ -33470,6 +33502,9 @@
                     },
                     "links": {
                       "$ref": "#/components/schemas/PaginatedLinks"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/ListOrgsInGroupMeta"
                     }
                   },
                   "required": [

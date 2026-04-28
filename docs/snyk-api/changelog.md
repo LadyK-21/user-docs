@@ -1,3 +1,11 @@
+## 2026-03-25 - Updated 2026-04-28
+
+### GET - `/groups/{group_id}/orgs` - Updated
+- added the new optional `query` request parameter `expand`
+
+- added the optional property `meta` to the response with the `200` status
+
+
 ## 2026-03-25 - Updated 2026-04-23
 
 ### PATCH - `/orgs/{org_id}/settings/opensource/{ecosystem}/broker` - Updated
