@@ -1,4 +1,4 @@
-# Snyk CLI for .NET
+# CLI support for .NET
 
 To analyze Open Source libraries, install your dependencies, then run `snyk test` using one of the following options:
 

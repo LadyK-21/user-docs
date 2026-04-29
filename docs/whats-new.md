@@ -333,7 +333,7 @@ The [Bitbucket Cloud App](developer-tools/scm-integrations/organization-level-in
 
 * For [SCM integrations with Python](supported-languages/supported-languages-list/python/scm-integrations-and-python.md), the list of dependencies that are not supported has been updated to include `pip` for Python 2.7 and 3.7.
 * [Python dependency filtering results](supported-languages/supported-languages-list/python/scm-integrations-and-python.md) have been updated to clarify the conditions in which certain packages and configurations are skipped by SCM scans.
-* The list of supported package managers has been updated to include `conan`. See [C/C++](supported-languages/supported-languages-list/c-c++/), [SBOM test](developer-tools/snyk-cli/commands/sbom-test.md), [Test an SBOM document for vulnerabilities](snyk-api/using-specific-snyk-apis/sbom-apis/rest-api-endpoint-test-an-sbom-document-for-vulnerabilities.md).
+* The list of supported package managers has been updated to include `conan`. See [C/C++](supported-languages/supported-languages-list/c-c++.md), [SBOM test](developer-tools/snyk-cli/commands/sbom-test.md), [Test an SBOM document for vulnerabilities](snyk-api/using-specific-snyk-apis/sbom-apis/rest-api-endpoint-test-an-sbom-document-for-vulnerabilities.md).
 * [Instructions for upgrading an Organization integration from Classic Broker to Universal Broker](implementation-and-setup/enterprise-setup/snyk-broker/universal-broker/upgrade-an-organization-integration-from-classic-broker-to-universal-broker.md) were clarified.
 
 ### April 2025
