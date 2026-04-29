@@ -19,7 +19,7 @@ The following rules are applied to the creation of automatic PRs for vulnerabili
 
 For known vulnerabilities, visit [Configure Automatic Backlog PRs.](enable-automatic-backlog-prs-for-previously-known-vulnerabilities.md)
 
-<figure><img src="../../../.gitbook/assets/project-settings-test-pull-request-frequency (1).png" alt="Test &#x26; Automated Pull Request Frequency setting"><figcaption><p>Test &#x26; Automated Pull Request Frequency setting</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/project-settings-test-pull-request-frequency.png" alt="Test &#x26; Automated Pull Request Frequency setting"><figcaption><p>Test &#x26; Automated Pull Request Frequency setting</p></figcaption></figure>
 
 To determine when your last 24-hour window began, check the Project issue card for **Snapshot taken by recurring test** and check your email for **\[snyk] Vulnerability alert** for specific scan results:
 

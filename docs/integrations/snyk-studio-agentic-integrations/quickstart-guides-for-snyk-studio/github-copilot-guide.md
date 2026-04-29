@@ -13,7 +13,7 @@ You can access Snyk Studio, including Snyk's MCP server, in VSCode to secure cod
 
 Once installation completes, a modal window will appear prompting an opt-in to Snyk Studio's "Secure at Inception." This will automatically configure the necessary rules to scan any new AI generated code. Additional variations are available within the plugin's Settings page.
 
-<figure><img src="../../../.gitbook/assets/image (41) (2).png" alt="" width="215"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (41).png" alt="" width="215"><figcaption></figcaption></figure>
 
 Choosing yes will activate `Auto Configure Snyk Mcp Server` and set the `Secure at Inception: Execution Frequency` to "On Code Generation." These settings willl handle the configuration of the Snyk MCP and the creation of the snyk\_rules.mdc file within the directory.
 

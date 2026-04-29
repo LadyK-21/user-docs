@@ -16,7 +16,7 @@ Read more about this report [here](../../../manage-risk/analytics/reports-tab/ed
 [Learning Programs](../snyk-learn-learning-programs.md) are not included in the Engagement Report
 {% endhint %}
 
-<figure><img src="../../../.gitbook/assets/Screenshot 2025-09-29 at 19.30.57 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Screenshot 2025-09-29 at 19.30.57.png" alt=""><figcaption></figcaption></figure>
 
 ## Learning Impact & Opportunities report
 

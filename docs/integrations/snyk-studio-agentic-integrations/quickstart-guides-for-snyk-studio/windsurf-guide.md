@@ -13,7 +13,7 @@ Access [Snyk Studio](../../../discover-snyk/getting-started/glossary.md#snyk-stu
 
 Once installation completes, a modal will appear prompting you to opt-in to Snyk Studio's "[Secure at Inception](../../../discover-snyk/getting-started/glossary.md#secure-at-inception)." This will automatically configure the necessary rules to scan any new AI generated code. Additional variations are available within the plugin's **Settings** page.
 
-<figure><img src="../../../.gitbook/assets/image (41) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (41).png" alt=""><figcaption></figcaption></figure>
 
 Choosing yes will activate `Auto Configure Snyk Mcp Server` and set the `Secure at Inception: Execution Frequency` to "On Code Generation." These settings willl handle the configuration of the Snyk MCP and the creation of the snyk\_rules.mdc file within the directory.
 
@@ -139,7 +139,7 @@ If you have the Node.js `npx` executable installed in your environment, add the 
 }
 ```
 
-<figure><img src="../../../.gitbook/assets/image (407) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (407).png" alt=""><figcaption></figcaption></figure>
 
 #### Install with pre-installed Snyk CLI
 

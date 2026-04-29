@@ -429,7 +429,7 @@ See also [Invite users](../reference/organizations-v1.md#org-orgid-invite).
 
 **More information:** [Dart and Flutter](../../supported-languages/supported-languages-list/dart-and-flutter.md);\
 [Rust](../../supported-languages/supported-languages-list/rust.md):\
-[Guidance for Snyk for C++ page, Alternate testing options section](../../supported-languages/supported-languages-list/c-c++/guidance-for-snyk-for-c-c++.md#alternate-testing-options);\
+[Guidance for Snyk for C++ page, Alternate testing options section](/broken/pages/11FkFB7EPbsM1mTkFvJ0#alternate-testing-options);\
 [Guidance for Java and Kotlin](../../supported-languages-package-managers-and-frameworks/java-and-kotlin/);\
 [Guidance for JavaScript and Node.js](../../supported-languages/supported-languages-list/javascript/#unmanaged-javascript);\
 [List issues for a package page](../using-specific-snyk-apis/issues-list-issues-for-a-package.md)

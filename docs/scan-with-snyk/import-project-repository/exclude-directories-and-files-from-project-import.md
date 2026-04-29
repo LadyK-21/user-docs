@@ -8,7 +8,7 @@ When you import a repository to be tested by Snyk Code, you can exclude certain 
 
 {% hint style="info" %}
 * In Snyk Code, the `.snyk` file can only be used to exclude directories and files from import. It cannot be used to ignore vulnerabilities or for any other action, as in other Snyk products.
-* The `exclude` option in the `.snyk` file applies only to the Snyk Web UI, CLI, and IDE environments.&#x20;
+* The `exclude` option in the `.snyk` file applies only to the Snyk Web UI, CLI, and IDE environments.
 * In certain situations, your excluded files may not be excluded if there is an invalid `.snyk` file. In these situations, the scan continues without the `.snyk` file.
 {% endhint %}
 
@@ -116,4 +116,4 @@ Now you want to exclude the `app.js` and `db.js` files from the Snyk Code analys
 
 The `app.js` and `db.js` files are excluded from the retest. They are not tested by Snyk Code and do not appear in the Code Analysis results. Now, only five vulnerability issues are detected.
 
-<figure><img src="../../.gitbook/assets/image (545) (1).png" alt="Example of issues detected in files after excluding"><figcaption><p>Detected issues after files have been excluded</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (545).png" alt="Example of issues detected in files after excluding"><figcaption><p>Detected issues after files have been excluded</p></figcaption></figure>

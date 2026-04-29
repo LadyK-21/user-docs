@@ -1,122 +1,4 @@
-# C/C++
-
-{% hint style="info" %}
-C/C++ is supported for Snyk Code and Snyk Open Source.
-{% endhint %}
-
-Available integrations:
-
-* CLI and IDE: test or monitor your app
-
-## Supported frameworks and libraries
-
-For C/C++, the following frameworks and libraries are supported:
-
-{% columns %}
-{% column %}
-* argparse parser
-* Asio Library
-* Boost Library
-* Botan LIbrary
-* C Standard Library
-* C++ Standard Library
-* Curl library
-* fstream framework
-* grpc-cpp library
-* HTTPlib framework
-* JsonCpp library
-* liboai framework
-* libpq library
-* libpqxx framework
-* libsodium library
-* LibTomCrypt framework
-* libxml2 framework
-{% endcolumn %}
-
-{% column %}
-* MySQL framework
-* OpenSSL framework
-* POSIX LIbrary
-* pugixml library
-* SQLite library
-* WinHTTP framework
-* Xerces libraries
-{% endcolumn %}
-{% endcolumns %}
-
-## Supported package managers
-
-For Conan, Snyk supports [conan.io](https://conan.io/center) as a package registry.
-
-## C/C++ for Snyk Code
-
-For C/C++ for Snyk Code, the embedded operating system is Linux. Support for Windows is limited.
-
-### Supported file formats
-
-For C/C++ with Snyk Code, Snyk supports the following file formats: `.c`, `.cc`, `.cpp`, `.cxx`, `.h`, `.hpp`, `.hxx`.
-
-### Available features
-
-* SCM import
-* Support for interfile analysis
-
-If you use macros, it is possible that your results include false positives and false negatives.
-
-For C/C++ Projects:
-
-* Snyk does not require compilation or a build to perform analysis.
-* Snyk Code analyzes the source code directly.
-* If you have precompile components, ensure the source code is available during the scan.
-
-When using the IDE, you do not need additional options. The Snyk plugin displays results in the IDE views.
-
-## C/C++ for Snyk Open Source
-
-### Available features
-
-* License scanning
-* Reports
-* Test your app's SBOM and packages using `pkg:generic` or `pkg:conan` PURLs through [SBOM test](../../../developer-tools/snyk-cli/commands/sbom-test.md) CLI command.
-
-{% hint style="info" %}
-The **Snyk FixPR** feature is not available for C/C++. This means that you will not be notified if the PR checks fail when the following conditions are met:
-
-* The **PR checks** feature is enabled and configured to **Only fail when the issues found have a fix available.**
-* "**Fixed in" available** is set to **Yes.**
-{% endhint %}
-
-### Dependency management and license compliance
-
-To check compliance for open source licenses, visit [Snyk License Compliance Management.](../../../scan-with-snyk/snyk-open-source/scan-open-source-libraries-and-licenses/snyk-license-compliance-management.md)
-
-For information about managing dependencies and licenses from your developer workflows through policy, visit the following resources:
-
-* [Defining a secure open source policy](https://snyk.io/series/open-source-security/open-source-policy/)
-* [Use Snyk security policies to prioritize fixes more efficiently](https://snyk.io/blog/snyk-security-policies/)
-
-To scan for C/C++ Open Source dependencies using the IDE, add the `--unmanaged` option to your IDE settings:
-
-1. Navigate to **Additional Parameters** in the IDE settings.
-2. Enter `--unmanaged`.
-3. Click **Scan for dependencies**.
-
-### Troubleshooting
-
-Your Snyk Open Source code is not sent to Snyk severs. Snyk converts the files to a list of hashes before sending them for scanning.
-
-Snyk matches your code against a database of official open-source releases. If a scan returns no results, check these common causes:
-
-* **Unpacked source code:** The source code of the scanned dependencies must be unpacked in the scanned directory. If you use a package manager like Conan, the Conan cache often contains the source code along with dependencies from other Snyk Projects. Snyk recommends scanning package manager dependencies in a clean environment, for example, during a build.
-* **Unofficial releases:** The dependency source code is not from an official release of the open-source software (OSS) component. Snyk does not store unofficial releases in the database.
-* **Extensive modifications:** If you modify the OSS source code extensively, Snyk cannot detect it. If you modify most files in a small component, Snyk cannot match them to the Snyk database. Common modifications include whitespace formatting and adding license or copyright headers.
-* **Incomplete source code:** If you include only a small percentage of the component files, Snyk cannot match them to the Snyk database.
-* **Symlink issues:** Snyk does not follow symlinks when collecting files for hashing. If you unzip a Linux source package in Windows, Windows replaces in-package symlinks with copies of linked files. This makes the Windows representation different from the original source. If the difference is too large, Snyk cannot detect the component.
-* **New components:** The OSS component source code is too new. Snyk refreshes the database twice a month, but processing the latest releases takes time.
-
-If none of the above apply, contact Snyk Support.
-
-## CLI support for C/C++
+# \[MOVED] CLI support for C/C++
 
 To explore C/C++ vulnerabilities, you can search the [Snyk Vulnerability Database](../../../scan-with-snyk/snyk-open-source/manage-vulnerabilities/snyk-vulnerability-database.md). Snyk tests your code against this database. Snyk updates the database periodically with the latest source code from online sources.
 
@@ -163,13 +45,13 @@ To prevent noise from individual scans, Snyk recommends that you:
 
 For automated scans in a CI/CD pipeline, run `snyk monitor --unmanaged` and send results to your chosen Organization. This displays license and policy information.
 
-### Scanning license policies
+## Scanning license policies
 
 You can create a license policy for open-source applications to specify unapproved licenses. When Snyk detects an unapproved license, it sends an alert containing the license name and the license policy text.
 
 Administrators associate license policy text with the license issue. This text provides custom instructions on how to resolve the issue or explains why the license violates the policy.
 
-### Display dependencies
+## Display dependencies
 
 To display dependencies in your codebase and their origin, use the `--print-deps` option.
 
@@ -236,7 +118,7 @@ Dependencies:
 
 The output shows the confidence level for the identified dependency and its version. Use the `--print-deps` or `--print-dep-paths` option to view this information.
 
-### Confidence level
+## Confidence level
 
 The confidence level indicates how accurately Snyk identifies a dependency. This value ranges from 0 to 1. A higher number indicates greater accuracy. A confidence level of 1 means all files in the source tree fully match the expected files in the Snyk database.
 
@@ -246,7 +128,7 @@ curl|https://github.com/curl/curl/releases/download/curl-7_58_0/curl-7.58.0.tar.
 
 Snyk uses file signatures to find the closest match to an open-source library. If you modify the source code of a dependency, the identification accuracy decreases.
 
-### Source code dependency location
+## Source code dependency location
 
 The CLI requires the full dependency source code in the scanned directory to find dependencies.
 
@@ -279,7 +161,7 @@ c-example
 ...
 ```
 
-### Scanning archives
+## Scanning archives
 
 By default, Snyk does not scan archives. However, the CLI can recursively extract archives to analyze the internal source code.
 
@@ -291,13 +173,13 @@ Snyk supports the following archive formats:
 * Tar archives
 * Tar with gzip compression algorithm
 
-### Support for releases
+## Support for releases
 
 Snyk tracks only official releases. Snyk does not identify commits, including commits to the default branch, unless they are part of an official release or tag.
 
 For Projects with a package manager, this means a release to the package manager. For Go and unmanaged scans (C/C++), this requires an official release or tag on the GitHub repository.
 
-### Data collection during a scan
+## Data collection during a scan
 
 When you scan C++ Projects, Snyk collects and stores the following data for troubleshooting:
 
@@ -310,7 +192,7 @@ Example:
 ./project-name/vendor/bzip2-1.0.6/blocksort.c
 ```
 
-### JSON output
+## JSON output
 
 To generate machine-readable JSON output, use the `--json` option:
 
@@ -413,7 +295,7 @@ $ snyk test --unmanaged --json
 ]
 ```
 
-### CLI options
+## CLI options
 
 You can use the following command-line options with the `snyk test --unmanaged` and `snyk monitor --unmanaged` commands:
 
