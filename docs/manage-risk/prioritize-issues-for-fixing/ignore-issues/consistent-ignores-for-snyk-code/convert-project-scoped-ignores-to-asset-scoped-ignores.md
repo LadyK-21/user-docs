@@ -10,7 +10,7 @@ Conversion provides you with control over which ignores Snyk converts. For examp
 
 The following scenario assumes that you have ignored issues in your Snyk Code Project prior to enabling Snyk Code Consistent Ignores.
 
-If the **Ignore** button is inactive after you enable the **Snyk Code Consistent Ignores** feature, retest the Project. In most cases, the **Ignore** button is active, and this step is not necessary.
+If the **Ignore** button is inactive after you enable the **Snyk Code Consistent Ignores** feature, retest the Project.
 
 ## Convert individual ignore
 
