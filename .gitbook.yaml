@@ -231,3 +231,4 @@ redirects:
   supported-languages/supported-languages-list/c-c++/c-c++-for-open-source: supported-languages/supported-languages-list/c-c++/README.md
   supported-languages/supported-languages-list/c-c++/guidance-for-snyk-for-c-c++: supported-languages/supported-languages-list/c-c++/README.md
   supported-languages/supported-languages-list/c-c++/troubleshooting-c-c++-for-open-source: supported-languages/supported-languages-list/c-c++/README.md
+  supported-languages/supported-languages-list/c-c++/snyk-cli-for-open-source-c++-scans: supported-languages/supported-languages-list/c-c++/README.md
