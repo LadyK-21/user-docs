@@ -1291,6 +1291,7 @@
     },
     "parameters": {
       "Accept": {
+        "description": "Accept header",
         "in": "header",
         "name": "Accept",
         "schema": {
@@ -2907,7 +2908,7 @@
         "x-snyk-internal": true
       },
       "SparseFieldsets": {
-        "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[\u003ctype\u003e]=field1,field2` where `\u003ctype\u003e` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_pretty_name` - Human-readable operating system name\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n",
+        "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[\u003ctype\u003e]=field1,field2` where `\u003ctype\u003e` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_pretty_name` - Human-readable operating system name\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `aliases` - Alternate identifiers for the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\n`fields[repositories]` accepts the repository attributes and the shared asset fields, including `aliases`.\n\nNote: `type` and `id` are always included regardless of field selection.\n",
         "example": {
           "container_images": "registry,repository,config_digest"
         },
@@ -5633,6 +5634,12 @@
             "nullable": true,
             "type": "string"
           },
+          "id_from_source": {
+            "description": "Identifier of the asset in the source (SCM) system it was discovered from",
+            "example": "610306547",
+            "nullable": true,
+            "type": "string"
+          },
           "image_digests": {
             "description": "List of digests for the container image",
             "items": {
@@ -5757,6 +5764,16 @@
       "AssetBaseAttributes": {
         "description": "Asset-level fields shared across all asset types.",
         "properties": {
+          "aliases": {
+            "description": "Alternate identifiers for this asset, distinct from its natural key. Values are returned in lexicographic order. Omitted when the asset has none.\n",
+            "items": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 50,
+            "type": "array"
+          },
           "class": {
             "$ref": "#/components/schemas/ClassResponse"
           },
@@ -5784,6 +5801,11 @@
           "last_seen_at": {
             "description": "When the asset was last seen (i.e., confirmed to exist) via any discovery source.\nUpdated on every upsert operation.\n",
             "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "description": "Human-readable asset name.",
+            "maxLength": 1024,
             "type": "string"
           },
           "org_ids": {
@@ -5930,6 +5952,53 @@
             "type": "integer"
           }
         },
+        "type": "object"
+      },
+      "AssetIdentifier": {
+        "additionalProperties": false,
+        "description": "JSON:API resource identifier for an asset. Attributes are omitted.",
+        "properties": {
+          "id": {
+            "description": "The unique identifier of the asset",
+            "format": "uuid",
+            "type": "string"
+          },
+          "type": {
+            "description": "The JSON:API resource type",
+            "enum": [
+              "container_images",
+              "sboms",
+              "repositories"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object"
+      },
+      "AssetIdentifierDocument": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AssetIdentifier"
+          },
+          "links": {
+            "properties": {
+              "self": {
+                "description": "Link to the current document",
+                "format": "uri",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
         "type": "object"
       },
       "AssetLabelsUpdate": {
@@ -6258,13 +6327,7 @@
             "type": "string"
           },
           "type": {
-            "description": "The JSON:API resource type",
-            "enum": [
-              "container_images",
-              "sboms",
-              "repositories"
-            ],
-            "type": "string"
+            "$ref": "#/components/schemas/AssetType"
           }
         },
         "required": [
@@ -6297,6 +6360,15 @@
           }
         },
         "type": "object"
+      },
+      "AssetType": {
+        "description": "The JSON:API resource type of the asset",
+        "enum": [
+          "container_images",
+          "sboms",
+          "repositories"
+        ],
+        "type": "string"
       },
       "AssignableByMe": {
         "example": false,
@@ -12261,12 +12333,7 @@
           "asset_types": {
             "description": "List of asset types this field applies to",
             "items": {
-              "enum": [
-                "container_images",
-                "sboms",
-                "repositories"
-              ],
-              "type": "string"
+              "$ref": "#/components/schemas/AssetType"
             },
             "type": "array"
           },
@@ -19955,6 +20022,12 @@
             "minLength": 2,
             "type": "string"
           },
+          "deprecation_date": {
+            "description": "When the model is or was deprecated by its provider. Omitted when unknown.",
+            "example": "2026-01-15T00:00:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
           "has_risk_assessment": {
             "description": "Whether the model has risk scores. Available regardless of entitlement.",
             "example": true,
@@ -20089,6 +20162,12 @@
           "release_date": {
             "description": "When the model was first published upstream. Omitted when unknown.",
             "example": "2024-07-18T08:56:00Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "retirement_date": {
+            "description": "When the model is or was retired by its provider. Omitted when unknown.",
+            "example": "2026-06-30T00:00:00Z",
             "format": "date-time",
             "type": "string"
           },
@@ -22288,7 +22367,8 @@
               "3.11",
               "3.12",
               "3.13",
-              "3.14"
+              "3.14",
+              "3.15"
             ],
             "type": "string"
           }
@@ -22986,13 +23066,7 @@
             "type": "object"
           },
           "type": {
-            "description": "The JSON:API resource type",
-            "enum": [
-              "container_images",
-              "sboms",
-              "repositories"
-            ],
-            "type": "string"
+            "$ref": "#/components/schemas/AssetType"
           }
         },
         "required": [
@@ -24969,11 +25043,6 @@
             "nullable": true,
             "type": "string"
           },
-          "name": {
-            "description": "Repository name from SCM",
-            "maxLength": 256,
-            "type": "string"
-          },
           "org_context": {
             "$ref": "#/components/schemas/OrgContext"
           },
@@ -25009,6 +25078,12 @@
           },
           "scm_source": {
             "description": "SCM source, differentiating between providers and instances (e.g. github)",
+            "maxLength": 256,
+            "nullable": true,
+            "type": "string"
+          },
+          "scm_type": {
+            "description": "Broad SCM category, regardless of instance (e.g. github-enterprise, gitlab)",
             "maxLength": 256,
             "nullable": true,
             "type": "string"
@@ -25566,7 +25641,7 @@
         "type": "object"
       },
       "RsqlFilterString": {
-        "description": "RSQL filter expression for filtering results.\n\n**Supported operators:**\n- `==` (equal), `!=` (not equal)\n- `\u003c` or `=lt=` (less than), `\u003e` or `=gt=` (greater than)\n- `\u003c=` or `=le=` (less than or equal), `\u003e=` or `=ge=` (greater than or equal)\n- `=in=(val1,val2)` (IN list), `=out=(val1,val2)` (NOT IN list)\n- `;` or ` and ` (logical AND), `,` or ` or ` (logical OR) - word operators are case-insensitive\n\n**Wildcard pattern matching:**\nUse `*` (asterisk) for flexible string matching with `==` and `!=` operators:\n- `*value*` - Contains (e.g., `registry==*docker*` matches \"docker.io\")\n- `value*` - Starts with (e.g., `registry==docker*` matches \"docker.io\")\n- `*value` - Ends with (e.g., `name==*nginx` matches \"library/nginx\")\n- `!=*value*` - Does not contain (e.g., `class!=*test*`)\n\nNote: Special SQL characters (%, _) are automatically escaped for security.\n\n**Quoted values:**\nValues can optionally be wrapped in single quotes (`'...'`) or double quotes (`\"...\"`).\nQuotes are stripped before comparison, so `registry=='docker.io'` is equivalent to `registry==docker.io`.\nEscaped quotes inside quoted values are supported (e.g., `name==\"O\\\"Reilly\"`).\nQuoting is required when filtering for empty values (see below).\n\n**Filtering for empty values:**\nUse empty quotes (`''` or `\"\"`) with `==` or `!=` to filter by empty fields:\n- `registry==''` - Matches assets where registry is empty\n- `registry!=''` - Matches assets where registry has a value\n\n**Multi-field substring search:**\nUse the special `q` field to search across multiple fields simultaneously using case-insensitive substring matching:\n- `q==\u003csearch_term\u003e` - Searches across all searchable string fields (labels, tags, registry, repository, name, config_digest, manifest_digest, index_digest, image_tag)\n- Only supports the `==` operator (no wildcards needed - automatically searches for substring matches)\n- Uses case-insensitive pattern matching (PostgreSQL ILIKE)\n- Does not support linguistic features like stemming or ranking\n- Special characters are automatically escaped for security\n- Can be combined with other filters: `q==nginx;type==container_images`\n\n**Supported fields:**\n\nCommon fields (apply to all asset types):\n- `q` (string) - Multi-field substring search (see above)\n- `id` (UUID) - Asset ID\n- `type` (string) - Type of asset. Allowed values: `container_images`\n- `class` (string) - Class of asset (e.g., A, B)\n- `created_at` (timestamp) - Asset creation timestamp (ISO 8601 format)\n- `updated_at` (timestamp) - Asset last update timestamp (ISO 8601 format)\n- `labels` (string array) - Asset labels\n- `tags` (object) - Asset tags. Requires a sub-field (e.g., `tags.env==production`)\n\nContainer image fields (apply when type is `container_images`):\n- `registry` (string) - Container image registry (e.g., docker.io)\n- `repository` (string) - Container image repository path\n- `name` (string) - Container image name\n- `config_digest` (string) - Image config digest\n- `manifest_digest` (string) - Distribution manifest digest\n- `index_digest` (string) - Distribution index digest\n- `image_tag` (string) - Image tag from discovery source\n- `image_labels` (object) - OCI image config labels. Requires a sub-field (e.g., `image_labels.vendor==nginx`)\n\n**Examples:**\n- `q==nginx` - Multi-field substring search for \"nginx\"\n- `q==docker.io;type==container_images` - Search \"docker.io\" substring in container images only\n- `type==container_images` - Exact match on asset type\n- `registry==*docker*` - Registry contains \"docker\" (wildcard)\n- `created_at\u003e2024-01-01` or `created_at=gt=2024-01-01` - Date comparison\n- `class==A;created_at=ge=2024-01-01` - AND combination\n- `labels=in=(production,staging)` - Labels IN list\n- `tags.env==production` - Tag sub-field filter\n- `image_labels.vendor==nginx` - Image label sub-field filter\n- `registry=='docker.io'` - Quoted value (equivalent to `registry==docker.io`)\n- `registry==''` - Assets where registry is empty\n- `registry!=''` - Assets where registry has a value\n",
+        "description": "RSQL filter expression for filtering results.\n\n**Supported operators:**\n- `==` (equal), `!=` (not equal)\n- `\u003c` or `=lt=` (less than), `\u003e` or `=gt=` (greater than)\n- `\u003c=` or `=le=` (less than or equal), `\u003e=` or `=ge=` (greater than or equal)\n- `=in=(val1,val2)` (IN list), `=out=(val1,val2)` (NOT IN list)\n- `;` or ` and ` (logical AND), `,` or ` or ` (logical OR) - word operators are case-insensitive\n\n**Wildcard pattern matching:**\nUse `*` (asterisk) for flexible string matching with `==` and `!=` operators:\n- `*value*` - Contains (e.g., `registry==*docker*` matches \"docker.io\")\n- `value*` - Starts with (e.g., `registry==docker*` matches \"docker.io\")\n- `*value` - Ends with (e.g., `name==*nginx` matches \"library/nginx\")\n- `!=*value*` - Does not contain (e.g., `class!=*test*`)\n\nNote: Special SQL characters (%, _) are automatically escaped for security.\n\n**Quoted values:**\nValues can optionally be wrapped in single quotes (`'...'`) or double quotes (`\"...\"`).\nQuotes are stripped before comparison, so `registry=='docker.io'` is equivalent to `registry==docker.io`.\nEscaped quotes inside quoted values are supported (e.g., `name==\"O\\\"Reilly\"`).\nQuoting is required when filtering for empty values (see below).\n\n**Filtering for empty values:**\nUse empty quotes (`''` or `\"\"`) with `==` or `!=` to filter by empty fields:\n- `registry==''` - Matches assets where registry is empty\n- `registry!=''` - Matches assets where registry has a value\n\n**Multi-field substring search:**\nUse the special `q` field to search across multiple fields simultaneously using case-insensitive substring matching:\n- `q==\u003csearch_term\u003e` - Searches across all searchable string fields (labels, tags, registry, repository, name, config_digest, manifest_digest, index_digest, image_tag)\n- Only supports the `==` operator (no wildcards needed - automatically searches for substring matches)\n- Uses case-insensitive pattern matching (PostgreSQL ILIKE)\n- Does not support linguistic features like stemming or ranking\n- Special characters are automatically escaped for security\n- Can be combined with other filters: `q==nginx;type==container_images`\n\n**Supported fields:**\n\nCommon fields (apply to all asset types):\n- `q` (string) - Multi-field substring search (see above)\n- `id` (UUID) - Asset ID\n- `key` (object) - Case-sensitive match against an asset natural key, then its aliases. Requires an asset type sub-field, for example `key.repositories==github.com/843480392`. Supports `==` and `=in=` only. Each value matches at most one asset of that type: the natural-key hit wins when the same value is also an alias of a different asset.\n- `type` (string) - Type of asset. Allowed values: `container_images`\n- `class` (string) - Class of asset (e.g., A, B)\n- `created_at` (timestamp) - Asset creation timestamp (ISO 8601 format)\n- `updated_at` (timestamp) - Asset last update timestamp (ISO 8601 format)\n- `name` (string) - Asset display name\n- `labels` (string array) - Asset labels\n- `tags` (object) - Asset tags. Requires a sub-field (e.g., `tags.env==production`)\n\nContainer image fields (apply when type is `container_images`):\n- `registry` (string) - Container image registry (e.g., docker.io)\n- `repository` (string) - Container image repository path\n- `config_digest` (string) - Image config digest\n- `manifest_digest` (string) - Distribution manifest digest\n- `index_digest` (string) - Distribution index digest\n- `image_tag` (string) - Image tag from discovery source\n- `image_labels` (object) - OCI image config labels. Requires a sub-field (e.g., `image_labels.vendor==nginx`)\n\n**Examples:**\n- `q==nginx` - Multi-field substring search for \"nginx\"\n- `q==docker.io;type==container_images` - Search \"docker.io\" substring in container images only\n- `type==container_images` - Exact match on asset type\n- `registry==*docker*` - Registry contains \"docker\" (wildcard)\n- `created_at\u003e2024-01-01` or `created_at=gt=2024-01-01` - Date comparison\n- `class==A;created_at=ge=2024-01-01` - AND combination\n- `key.repositories==github.com/843480392` - Case-sensitive. The repository whose natural key matches, or the alias when no visible repository has that natural key\n- `key.repositories=in=(github.com/843480392,github.com/snyk/assets-api)` - Several keys, repositories only\n- `labels=in=(production,staging)` - Labels IN list\n- `tags.env==production` - Tag sub-field filter\n- `image_labels.vendor==nginx` - Image label sub-field filter\n- `registry=='docker.io'` - Quoted value (equivalent to `registry==docker.io`)\n- `registry==''` - Assets where registry is empty\n- `registry!=''` - Assets where registry has a value\n",
         "example": "type==container_images;created_at\u003e2024-01-01",
         "type": "string"
       },
@@ -26453,11 +26528,6 @@
                 "maxItems": 16,
                 "type": "array"
               },
-              "name": {
-                "description": "Sbom name",
-                "maxLength": 256,
-                "type": "string"
-              },
               "sbom_created_at": {
                 "description": "When the SBOM was generated, ISO 8601 format. Can be distinct from created_at",
                 "format": "date-time",
@@ -27093,7 +27163,7 @@
           "values": {
             "description": "Required values, which can be strings, dates, integers, booleans, or nested attributes",
             "items": {
-              "oneOf": [
+              "anyOf": [
                 {
                   "description": "A string value",
                   "type": "string"
@@ -27108,7 +27178,8 @@
                   "type": "integer"
                 },
                 {
-                  "$ref": "#/components/schemas/SearchAttributesObject"
+                  "description": "Search object",
+                  "type": "object"
                 },
                 {
                   "description": "A boolean value",
@@ -28920,6 +28991,14 @@
               }
             ],
             "description": "Type of Scanner producing Findings associated with this\nComponent."
+          },
+          "tool": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/String256"
+              }
+            ],
+            "description": "Tool used to perform the scan."
           }
         },
         "required": [
@@ -33592,7 +33671,7 @@
         "x-snyk-api-releases": [
           "2024-10-15~beta"
         ],
-        "x-snyk-api-resource": "asset",
+        "x-snyk-api-resource": "assetread",
         "x-snyk-api-stability": "beta",
         "x-snyk-api-version": "2024-10-15~beta",
         "x-stability-level": "beta"
@@ -34222,6 +34301,244 @@
         "x-stability-level": "beta"
       }
     },
+    "/groups/{group_id}/inventory/assets/id": {
+      "get": {
+        "description": "Resolves a single asset id within the group and asset type.\nThe key is matched against the asset natural key first, then against aliases.\nWhen both match different assets, the natural key match is returned.\nAn asset is visible only when it has a discovery source in the group.\nThe response is a JSON:API resource identifier and does not include attributes.\n\n#### Required permissions\n\n- `View Groups (group.read)`",
+        "operationId": "getAssetIdByKeyGroup",
+        "parameters": [
+          {
+            "description": "The unique identifier of the group",
+            "in": "path",
+            "name": "group_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The requested API version",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "example": "2024-10-15",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "JSON:API asset type to search within, such as repositories, container_images, or sboms",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Natural key or alias. A natural key match is preferred over an alias match.",
+            "in": "query",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetIdentifierDocument"
+                }
+              }
+            },
+            "description": "Asset id resolved successfully",
+            "headers": {
+              "deprecation": {
+                "$ref": "#/components/headers/DeprecationHeader"
+              },
+              "snyk-request-id": {
+                "$ref": "#/components/headers/RequestIdResponseHeader"
+              },
+              "snyk-version-lifecycle-stage": {
+                "$ref": "#/components/headers/VersionStageResponseHeader"
+              },
+              "snyk-version-requested": {
+                "$ref": "#/components/headers/VersionRequestedResponseHeader"
+              },
+              "snyk-version-served": {
+                "$ref": "#/components/headers/VersionServedResponseHeader"
+              },
+              "sunset": {
+                "$ref": "#/components/headers/SunsetHeader"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "summary": "Get an asset id by natural key or alias - Group scope (Early Access)",
+        "tags": [
+          "Inventory Assets"
+        ],
+        "x-snyk-api-lifecycle": "released",
+        "x-snyk-api-releases": [
+          "2024-10-15~beta"
+        ],
+        "x-snyk-api-resource": "assetread",
+        "x-snyk-api-stability": "beta",
+        "x-snyk-api-version": "2024-10-15~beta",
+        "x-stability-level": "beta"
+      }
+    },
+    "/groups/{group_id}/inventory/assets/lookup": {
+      "get": {
+        "description": "Resolves a single asset within the group and asset type.\nThe key is matched against the asset natural key first, then against aliases.\nWhen both match different assets, the natural key match is returned.\n\n#### Required permissions\n\n- `View Groups (group.read)`",
+        "operationId": "getAssetByKeyGroup",
+        "parameters": [
+          {
+            "description": "The unique identifier of the group",
+            "in": "path",
+            "name": "group_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The requested API version",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "example": "2024-10-15",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "JSON:API asset type to search within, such as repositories, container_images, or sboms",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Natural key or alias. A natural key match is preferred over an alias match.",
+            "in": "query",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/SparseFieldsets"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PolymorphicAssetData"
+                    },
+                    "links": {
+                      "properties": {
+                        "self": {
+                          "description": "Link to the current document",
+                          "format": "uri",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Asset retrieved successfully",
+            "headers": {
+              "deprecation": {
+                "$ref": "#/components/headers/DeprecationHeader"
+              },
+              "snyk-request-id": {
+                "$ref": "#/components/headers/RequestIdResponseHeader"
+              },
+              "snyk-version-lifecycle-stage": {
+                "$ref": "#/components/headers/VersionStageResponseHeader"
+              },
+              "snyk-version-requested": {
+                "$ref": "#/components/headers/VersionRequestedResponseHeader"
+              },
+              "snyk-version-served": {
+                "$ref": "#/components/headers/VersionServedResponseHeader"
+              },
+              "sunset": {
+                "$ref": "#/components/headers/SunsetHeader"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "summary": "Look up an asset by natural key or alias - Group scope (Early Access)",
+        "tags": [
+          "Inventory Assets"
+        ],
+        "x-snyk-api-lifecycle": "released",
+        "x-snyk-api-releases": [
+          "2024-10-15~beta"
+        ],
+        "x-snyk-api-resource": "assetread",
+        "x-snyk-api-stability": "beta",
+        "x-snyk-api-version": "2024-10-15~beta",
+        "x-stability-level": "beta"
+      }
+    },
     "/groups/{group_id}/inventory/assets/searches": {
       "post": {
         "description": "Initiates an asynchronous search for assets within a group context.\n\n#### Required permissions\n\n- `View Groups (group.read)`",
@@ -34559,7 +34876,7 @@
         "x-snyk-api-releases": [
           "2024-10-15~beta"
         ],
-        "x-snyk-api-resource": "asset",
+        "x-snyk-api-resource": "assetread",
         "x-snyk-api-stability": "beta",
         "x-snyk-api-version": "2024-10-15~beta",
         "x-stability-level": "beta"
@@ -37751,7 +38068,8 @@
         ],
         "x-snyk-api-lifecycle": "released",
         "x-snyk-api-releases": [
-          "2024-10-15~beta"
+          "2024-10-15~beta",
+          "2026-09-15~experimental"
         ],
         "x-snyk-api-resource": "grouppolicies",
         "x-snyk-api-stability": "beta",
@@ -62666,6 +62984,240 @@
               }
             }
           },
+          "400": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "example": {
+                    "errors": [
+                      {
+                        "detail": "Permission denied for this resource",
+                        "status": "403"
+                      }
+                    ],
+                    "jsonapi": {
+                      "version": "1.0"
+                    }
+                  },
+                  "properties": {
+                    "errors": {
+                      "example": [
+                        {
+                          "detail": "Permission denied for this resource",
+                          "status": "403"
+                        }
+                      ],
+                      "items": {
+                        "additionalProperties": false,
+                        "example": {
+                          "detail": "Not Found",
+                          "status": "404"
+                        },
+                        "properties": {
+                          "code": {
+                            "description": "An application-specific error code, expressed as a string value.",
+                            "example": "entity-not-found",
+                            "type": "string"
+                          },
+                          "detail": {
+                            "description": "A human-readable explanation specific to this occurrence of the problem.",
+                            "example": "The request was missing these required fields: ...",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "A unique identifier for this particular occurrence of the problem.",
+                            "example": "f16c31b5-6129-4571-add8-d589da9be524",
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "links": {
+                            "additionalProperties": false,
+                            "description": "A link that leads to further details about this particular occurrence of the problem.",
+                            "example": {
+                              "about": "https://example.com/about_this_error"
+                            },
+                            "properties": {
+                              "about": {
+                                "example": "https://example.com/api/resource",
+                                "oneOf": [
+                                  {
+                                    "description": "A string containing the link’s URL.",
+                                    "example": "https://example.com/api/resource",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "additionalProperties": false,
+                                    "example": {
+                                      "href": "https://example.com/api/resource"
+                                    },
+                                    "properties": {
+                                      "href": {
+                                        "description": "A string containing the link’s URL.",
+                                        "example": "https://example.com/api/resource",
+                                        "type": "string"
+                                      },
+                                      "meta": {
+                                        "additionalProperties": true,
+                                        "description": "Free-form object that may contain non-standard information.",
+                                        "example": {
+                                          "key1": "value1",
+                                          "key2": {
+                                            "sub_key": "sub_value"
+                                          },
+                                          "key3": [
+                                            "array_value1",
+                                            "array_value2"
+                                          ]
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "required": [
+                                      "href"
+                                    ],
+                                    "type": "object"
+                                  }
+                                ]
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "meta": {
+                            "additionalProperties": true,
+                            "example": {
+                              "key": "value"
+                            },
+                            "type": "object"
+                          },
+                          "source": {
+                            "additionalProperties": false,
+                            "example": {
+                              "pointer": "/data/attributes"
+                            },
+                            "properties": {
+                              "parameter": {
+                                "description": "A string indicating which URI query parameter caused the error.",
+                                "example": "param1",
+                                "type": "string"
+                              },
+                              "pointer": {
+                                "description": "A JSON Pointer [RFC6901] to the associated entity in the request document.",
+                                "example": "/data/attributes",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "status": {
+                            "description": "The HTTP status code applicable to this problem, expressed as a string value.",
+                            "example": "400",
+                            "pattern": "^[45]\\d\\d$",
+                            "type": "string"
+                          },
+                          "title": {
+                            "description": "A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.",
+                            "example": "Bad request",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "status",
+                          "detail"
+                        ],
+                        "type": "object"
+                      },
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "jsonapi": {
+                      "additionalProperties": false,
+                      "example": {
+                        "version": "1.0"
+                      },
+                      "properties": {
+                        "version": {
+                          "description": "Version of the JSON API specification this server supports.",
+                          "example": "1.0",
+                          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "version"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "jsonapi",
+                    "errors"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Bad Request: A parameter provided as a part of the request was invalid.",
+            "headers": {
+              "deprecation": {
+                "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                "example": "2021-07-01T00:00:00Z",
+                "schema": {
+                  "format": "date-time",
+                  "type": "string"
+                }
+              },
+              "snyk-request-id": {
+                "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                "example": "4b58e274-ec62-4fab-917b-1d2c48d6bdef",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              },
+              "snyk-version-lifecycle-stage": {
+                "description": "A header containing the version stage of the endpoint. This stage describes the guarantees Snyk provides surrounding stability of the endpoint.\n",
+                "schema": {
+                  "enum": [
+                    "wip",
+                    "experimental",
+                    "beta",
+                    "ga",
+                    "deprecated",
+                    "sunset"
+                  ],
+                  "example": "ga",
+                  "type": "string"
+                }
+              },
+              "snyk-version-requested": {
+                "description": "A header containing the version of the endpoint requested by the caller.",
+                "example": "2024-10-15",
+                "schema": {
+                  "description": "Requested API version",
+                  "pattern": "^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$",
+                  "type": "string"
+                }
+              },
+              "snyk-version-served": {
+                "description": "A header containing the version of the endpoint that was served by the API.",
+                "example": "2024-10-15",
+                "schema": {
+                  "description": "Resolved API version",
+                  "pattern": "^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$",
+                  "type": "string"
+                }
+              },
+              "sunset": {
+                "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                "example": "2021-08-02",
+                "schema": {
+                  "format": "date",
+                  "type": "string"
+                }
+              }
+            }
+          },
           "404": {
             "content": {
               "application/vnd.api+json": {
@@ -64866,6 +65418,240 @@
               },
               "sunset": {
                 "$ref": "#/components/headers/SunsetHeader"
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "example": {
+                    "errors": [
+                      {
+                        "detail": "Permission denied for this resource",
+                        "status": "403"
+                      }
+                    ],
+                    "jsonapi": {
+                      "version": "1.0"
+                    }
+                  },
+                  "properties": {
+                    "errors": {
+                      "example": [
+                        {
+                          "detail": "Permission denied for this resource",
+                          "status": "403"
+                        }
+                      ],
+                      "items": {
+                        "additionalProperties": false,
+                        "example": {
+                          "detail": "Not Found",
+                          "status": "404"
+                        },
+                        "properties": {
+                          "code": {
+                            "description": "An application-specific error code, expressed as a string value.",
+                            "example": "entity-not-found",
+                            "type": "string"
+                          },
+                          "detail": {
+                            "description": "A human-readable explanation specific to this occurrence of the problem.",
+                            "example": "The request was missing these required fields: ...",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "A unique identifier for this particular occurrence of the problem.",
+                            "example": "f16c31b5-6129-4571-add8-d589da9be524",
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "links": {
+                            "additionalProperties": false,
+                            "description": "A link that leads to further details about this particular occurrence of the problem.",
+                            "example": {
+                              "about": "https://example.com/about_this_error"
+                            },
+                            "properties": {
+                              "about": {
+                                "example": "https://example.com/api/resource",
+                                "oneOf": [
+                                  {
+                                    "description": "A string containing the link’s URL.",
+                                    "example": "https://example.com/api/resource",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "additionalProperties": false,
+                                    "example": {
+                                      "href": "https://example.com/api/resource"
+                                    },
+                                    "properties": {
+                                      "href": {
+                                        "description": "A string containing the link’s URL.",
+                                        "example": "https://example.com/api/resource",
+                                        "type": "string"
+                                      },
+                                      "meta": {
+                                        "additionalProperties": true,
+                                        "description": "Free-form object that may contain non-standard information.",
+                                        "example": {
+                                          "key1": "value1",
+                                          "key2": {
+                                            "sub_key": "sub_value"
+                                          },
+                                          "key3": [
+                                            "array_value1",
+                                            "array_value2"
+                                          ]
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "required": [
+                                      "href"
+                                    ],
+                                    "type": "object"
+                                  }
+                                ]
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "meta": {
+                            "additionalProperties": true,
+                            "example": {
+                              "key": "value"
+                            },
+                            "type": "object"
+                          },
+                          "source": {
+                            "additionalProperties": false,
+                            "example": {
+                              "pointer": "/data/attributes"
+                            },
+                            "properties": {
+                              "parameter": {
+                                "description": "A string indicating which URI query parameter caused the error.",
+                                "example": "param1",
+                                "type": "string"
+                              },
+                              "pointer": {
+                                "description": "A JSON Pointer [RFC6901] to the associated entity in the request document.",
+                                "example": "/data/attributes",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "status": {
+                            "description": "The HTTP status code applicable to this problem, expressed as a string value.",
+                            "example": "400",
+                            "pattern": "^[45]\\d\\d$",
+                            "type": "string"
+                          },
+                          "title": {
+                            "description": "A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.",
+                            "example": "Bad request",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "status",
+                          "detail"
+                        ],
+                        "type": "object"
+                      },
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "jsonapi": {
+                      "additionalProperties": false,
+                      "example": {
+                        "version": "1.0"
+                      },
+                      "properties": {
+                        "version": {
+                          "description": "Version of the JSON API specification this server supports.",
+                          "example": "1.0",
+                          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "version"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "jsonapi",
+                    "errors"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Bad Request: A parameter provided as a part of the request was invalid.",
+            "headers": {
+              "deprecation": {
+                "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                "example": "2021-07-01T00:00:00Z",
+                "schema": {
+                  "format": "date-time",
+                  "type": "string"
+                }
+              },
+              "snyk-request-id": {
+                "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                "example": "4b58e274-ec62-4fab-917b-1d2c48d6bdef",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              },
+              "snyk-version-lifecycle-stage": {
+                "description": "A header containing the version stage of the endpoint. This stage describes the guarantees Snyk provides surrounding stability of the endpoint.\n",
+                "schema": {
+                  "enum": [
+                    "wip",
+                    "experimental",
+                    "beta",
+                    "ga",
+                    "deprecated",
+                    "sunset"
+                  ],
+                  "example": "ga",
+                  "type": "string"
+                }
+              },
+              "snyk-version-requested": {
+                "description": "A header containing the version of the endpoint requested by the caller.",
+                "example": "2024-10-15",
+                "schema": {
+                  "description": "Requested API version",
+                  "pattern": "^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$",
+                  "type": "string"
+                }
+              },
+              "snyk-version-served": {
+                "description": "A header containing the version of the endpoint that was served by the API.",
+                "example": "2024-10-15",
+                "schema": {
+                  "description": "Resolved API version",
+                  "pattern": "^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$",
+                  "type": "string"
+                }
+              },
+              "sunset": {
+                "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                "example": "2021-08-02",
+                "schema": {
+                  "format": "date",
+                  "type": "string"
+                }
               }
             }
           },
@@ -73323,7 +74109,7 @@
         "x-snyk-api-releases": [
           "2024-10-15~beta"
         ],
-        "x-snyk-api-resource": "asset",
+        "x-snyk-api-resource": "assetread",
         "x-snyk-api-stability": "beta",
         "x-snyk-api-version": "2024-10-15~beta",
         "x-stability-level": "beta"
@@ -73953,6 +74739,244 @@
         "x-stability-level": "beta"
       }
     },
+    "/orgs/{org_id}/inventory/assets/id": {
+      "get": {
+        "description": "Resolves a single asset id within the org and asset type.\nThe key is matched against the asset natural key first, then against aliases.\nWhen both match different assets, the natural key match is returned.\nAn asset is visible only when it has a discovery source in the org.\nThe response is a JSON:API resource identifier and does not include attributes.\n\n#### Required permissions\n\n- `View Organization (org.read)`",
+        "operationId": "getAssetIdByKeyOrg",
+        "parameters": [
+          {
+            "description": "The unique identifier of the organization",
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The requested API version",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "example": "2024-10-15",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "JSON:API asset type to search within, such as repositories, container_images, or sboms",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Natural key or alias. A natural key match is preferred over an alias match.",
+            "in": "query",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetIdentifierDocument"
+                }
+              }
+            },
+            "description": "Asset id resolved successfully",
+            "headers": {
+              "deprecation": {
+                "$ref": "#/components/headers/DeprecationHeader"
+              },
+              "snyk-request-id": {
+                "$ref": "#/components/headers/RequestIdResponseHeader"
+              },
+              "snyk-version-lifecycle-stage": {
+                "$ref": "#/components/headers/VersionStageResponseHeader"
+              },
+              "snyk-version-requested": {
+                "$ref": "#/components/headers/VersionRequestedResponseHeader"
+              },
+              "snyk-version-served": {
+                "$ref": "#/components/headers/VersionServedResponseHeader"
+              },
+              "sunset": {
+                "$ref": "#/components/headers/SunsetHeader"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "summary": "Get an asset id by natural key or alias - Org scope (Early Access)",
+        "tags": [
+          "Inventory Assets"
+        ],
+        "x-snyk-api-lifecycle": "released",
+        "x-snyk-api-releases": [
+          "2024-10-15~beta"
+        ],
+        "x-snyk-api-resource": "assetread",
+        "x-snyk-api-stability": "beta",
+        "x-snyk-api-version": "2024-10-15~beta",
+        "x-stability-level": "beta"
+      }
+    },
+    "/orgs/{org_id}/inventory/assets/lookup": {
+      "get": {
+        "description": "Resolves a single asset within the org and asset type.\nThe key is matched against the asset natural key first, then against aliases.\nWhen both match different assets, the natural key match is returned.\n\n#### Required permissions\n\n- `View Organization (org.read)`",
+        "operationId": "getAssetByKeyOrg",
+        "parameters": [
+          {
+            "description": "The unique identifier of the organization",
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The requested API version",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "example": "2024-10-15",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "JSON:API asset type to search within, such as repositories, container_images, or sboms",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Natural key or alias. A natural key match is preferred over an alias match.",
+            "in": "query",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/SparseFieldsets"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PolymorphicAssetData"
+                    },
+                    "links": {
+                      "properties": {
+                        "self": {
+                          "description": "Link to the current document",
+                          "format": "uri",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Asset retrieved successfully",
+            "headers": {
+              "deprecation": {
+                "$ref": "#/components/headers/DeprecationHeader"
+              },
+              "snyk-request-id": {
+                "$ref": "#/components/headers/RequestIdResponseHeader"
+              },
+              "snyk-version-lifecycle-stage": {
+                "$ref": "#/components/headers/VersionStageResponseHeader"
+              },
+              "snyk-version-requested": {
+                "$ref": "#/components/headers/VersionRequestedResponseHeader"
+              },
+              "snyk-version-served": {
+                "$ref": "#/components/headers/VersionServedResponseHeader"
+              },
+              "sunset": {
+                "$ref": "#/components/headers/SunsetHeader"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "summary": "Look up an asset by natural key or alias - Org scope (Early Access)",
+        "tags": [
+          "Inventory Assets"
+        ],
+        "x-snyk-api-lifecycle": "released",
+        "x-snyk-api-releases": [
+          "2024-10-15~beta"
+        ],
+        "x-snyk-api-resource": "assetread",
+        "x-snyk-api-stability": "beta",
+        "x-snyk-api-version": "2024-10-15~beta",
+        "x-stability-level": "beta"
+      }
+    },
     "/orgs/{org_id}/inventory/assets/searches": {
       "post": {
         "description": "Initiates an asynchronous search for assets within an org context.\n\n#### Required permissions\n\n- `View Organization (org.read)`",
@@ -74290,7 +75314,7 @@
         "x-snyk-api-releases": [
           "2024-10-15~beta"
         ],
-        "x-snyk-api-resource": "asset",
+        "x-snyk-api-resource": "assetread",
         "x-snyk-api-stability": "beta",
         "x-snyk-api-version": "2024-10-15~beta",
         "x-stability-level": "beta"
@@ -116954,7 +117978,7 @@
             "$ref": "#/components/parameters/RsqlFilter"
           },
           {
-            "description": "Comma-separated sort fields. Prefix with `-` for descending order.\n\n**Supported fields:**\n- `created_at` - Asset creation timestamp\n- `updated_at` - Asset last update timestamp\n- `type` - Asset type (container_images)\n- `class` - Asset class\n- `risk_score` - Asset risk score (max across project sources)\n- `issues` - Issue counts by severity (critical, high, medium, low)\n- `built_at` - Image build timestamp (container images only)\n- `last_scan` - Last scan timestamp\n- `sbom_name` - SBOM name (SBOMs only)\n- `format` - SBOM format/standard (SBOMs only)\n- `document_version` - SBOM document version (SBOMs only)\n- `sbom_created_at` - SBOM creation timestamp (SBOMs only)\n",
+            "description": "Comma-separated sort fields. Prefix with `-` for descending order.\n\n**Supported fields:**\n- `created_at` - Asset creation timestamp\n- `updated_at` - Asset last update timestamp\n- `type` - Asset type (container_images)\n- `class` - Asset class\n- `risk_score` - Asset risk score (max across project sources)\n- `issues` - Issue counts by severity (critical, high, medium, low)\n- `built_at` - Image build timestamp (container images only)\n- `last_scan` - Last scan timestamp\n- `q` - Full text search\n- `id`\n- `key`\n- `labels`\n- `tags`\n- `name`\n- `org_id`\n\ncontainer_image specific\n- `registry`\n- `repository`\n- `config_digest`\n- `manifest_digest`\n- `index_digest`\n- `image_labels`\n- `image_tag`\n\nsbom specific\n- `format`\n- `format_version`\n- `document_uid`\n- `document_version`\n- `sbom_created_at`\n- `lifecycles`\n- `component_name`\n- `component_purl`\n- `component_type`\n\nrepository specific\n- `url`\n- `scm_id`\n- `visibility`\n- `scm_organization`\n- `scm_source`\n- `scm_type`\n- `archived`\n- `fork`\n",
             "example": "-created_at",
             "in": "query",
             "name": "sort",
@@ -117050,7 +118074,7 @@
         "x-snyk-api-releases": [
           "2024-10-15~beta"
         ],
-        "x-snyk-api-resource": "asset",
+        "x-snyk-api-resource": "assetread",
         "x-snyk-api-stability": "beta",
         "x-snyk-api-version": "2024-10-15~beta",
         "x-stability-level": "beta"
@@ -117681,6 +118705,244 @@
         "x-stability-level": "beta"
       }
     },
+    "/tenants/{tenant_id}/inventory/assets/id": {
+      "get": {
+        "description": "Resolves a single asset id within the tenant and asset type.\nThe key is matched against the asset natural key first, then against aliases.\nWhen both match different assets, the natural key match is returned.\nThe response is a JSON:API resource identifier and does not include attributes.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`",
+        "operationId": "getAssetIdByKeyTenant",
+        "parameters": [
+          {
+            "description": "The unique identifier of the tenant",
+            "in": "path",
+            "name": "tenant_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The requested API version",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "example": "2024-10-15",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "JSON:API asset type to search within, such as repositories, container_images, or sboms",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Natural key or alias. A natural key match is preferred over an alias match.",
+            "in": "query",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetIdentifierDocument"
+                }
+              }
+            },
+            "description": "Asset id resolved successfully",
+            "headers": {
+              "deprecation": {
+                "$ref": "#/components/headers/DeprecationHeader"
+              },
+              "snyk-request-id": {
+                "$ref": "#/components/headers/RequestIdResponseHeader"
+              },
+              "snyk-version-lifecycle-stage": {
+                "$ref": "#/components/headers/VersionStageResponseHeader"
+              },
+              "snyk-version-requested": {
+                "$ref": "#/components/headers/VersionRequestedResponseHeader"
+              },
+              "snyk-version-served": {
+                "$ref": "#/components/headers/VersionServedResponseHeader"
+              },
+              "sunset": {
+                "$ref": "#/components/headers/SunsetHeader"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "summary": "Get an asset id by natural key or alias (Early Access)",
+        "tags": [
+          "Inventory Assets"
+        ],
+        "x-snyk-api-lifecycle": "released",
+        "x-snyk-api-releases": [
+          "2024-10-15~beta"
+        ],
+        "x-snyk-api-resource": "assetread",
+        "x-snyk-api-stability": "beta",
+        "x-snyk-api-version": "2024-10-15~beta",
+        "x-stability-level": "beta"
+      }
+    },
+    "/tenants/{tenant_id}/inventory/assets/lookup": {
+      "get": {
+        "description": "Resolves a single asset within the tenant and asset type.\nThe key is matched against the asset natural key first, then against aliases.\nWhen both match different assets, the natural key match is returned.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`",
+        "operationId": "getAssetByKeyTenant",
+        "parameters": [
+          {
+            "description": "The unique identifier of the tenant",
+            "in": "path",
+            "name": "tenant_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The requested API version",
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "example": "2024-10-15",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "JSON:API asset type to search within, such as repositories, container_images, or sboms",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Natural key or alias. A natural key match is preferred over an alias match.",
+            "in": "query",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/SparseFieldsets"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PolymorphicAssetData"
+                    },
+                    "links": {
+                      "properties": {
+                        "self": {
+                          "description": "Link to the current document",
+                          "format": "uri",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Asset retrieved successfully",
+            "headers": {
+              "deprecation": {
+                "$ref": "#/components/headers/DeprecationHeader"
+              },
+              "snyk-request-id": {
+                "$ref": "#/components/headers/RequestIdResponseHeader"
+              },
+              "snyk-version-lifecycle-stage": {
+                "$ref": "#/components/headers/VersionStageResponseHeader"
+              },
+              "snyk-version-requested": {
+                "$ref": "#/components/headers/VersionRequestedResponseHeader"
+              },
+              "snyk-version-served": {
+                "$ref": "#/components/headers/VersionServedResponseHeader"
+              },
+              "sunset": {
+                "$ref": "#/components/headers/SunsetHeader"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "summary": "Look up an asset by natural key or alias (Early Access)",
+        "tags": [
+          "Inventory Assets"
+        ],
+        "x-snyk-api-lifecycle": "released",
+        "x-snyk-api-releases": [
+          "2024-10-15~beta"
+        ],
+        "x-snyk-api-resource": "assetread",
+        "x-snyk-api-stability": "beta",
+        "x-snyk-api-version": "2024-10-15~beta",
+        "x-stability-level": "beta"
+      }
+    },
     "/tenants/{tenant_id}/inventory/assets/searches": {
       "post": {
         "description": "Initiates an asynchronous search for assets and returns a redirect to the search results endpoint\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`",
@@ -118020,7 +119282,7 @@
         "x-snyk-api-releases": [
           "2024-10-15~beta"
         ],
-        "x-snyk-api-resource": "asset",
+        "x-snyk-api-resource": "assetread",
         "x-snyk-api-stability": "beta",
         "x-snyk-api-version": "2024-10-15~beta",
         "x-stability-level": "beta"
