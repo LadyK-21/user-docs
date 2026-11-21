@@ -1,3 +1,61 @@
+## 2026-09-09
+
+### GET - `/orgs/{org_id}/issues` - Updated
+- added the new optional `query` request parameter `project_status`
+
+- added the new optional `query` request parameter `source_types`
+
+- added the optional property `data/items/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/items/attributes/source_type` to the response with the `200` status
+
+
+
+### GET - `/orgs/{org_id}/issues/{issue_id}` - Updated
+- added the optional property `data/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/attributes/source_type` to the response with the `200` status
+
+
+
+### POST - `/groups/{group_id}/memberships` - Updated
+- request body became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/group/data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/group/data/id` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/role/data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/role/data/id` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/user/data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/user/data/id` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/groups/{group_id}/issues` - Updated
+- added the new optional `query` request parameter `project_status`
+
+- added the new optional `query` request parameter `source_types`
+
+- added the optional property `data/items/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/items/attributes/source_type` to the response with the `200` status
+
+
+
+### GET - `/groups/{group_id}/issues/{issue_id}` - Updated
+- added the optional property `data/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/attributes/source_type` to the response with the `200` status
+
+
 ## 2026-03-25 - Updated 2026-09-30
 
 ### POST - `/orgs/{org_id}/export` - Updated
