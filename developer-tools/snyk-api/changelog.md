@@ -1,3 +1,136 @@
+## 2026-09-09
+
+### GET - `/orgs/{org_id}/projects` - Updated
+- added the optional property `data/items/attributes/profile_name` to the response with the `200` status
+
+- added `#/components/schemas/PnpmBuildArgs, #/components/schemas/UvBuildArgs` to the `data/items/attributes/build_args` response property `oneOf` list for the response status `200`
+
+
+
+### PATCH - `/orgs/{org_id}/projects/{project_id}` - Updated
+- added the optional property `data/attributes/profile_name` to the response with the `200` status
+
+- added `#/components/schemas/PnpmBuildArgs, #/components/schemas/UvBuildArgs` to the `data/attributes/build_args` response property `oneOf` list for the response status `200`
+
+
+
+### GET - `/orgs/{org_id}/projects/{project_id}` - Updated
+- added the optional property `data/attributes/profile_name` to the response with the `200` status
+
+- added `#/components/schemas/PnpmBuildArgs, #/components/schemas/UvBuildArgs` to the `data/attributes/build_args` response property `oneOf` list for the response status `200`
+
+
+
+### POST - `/orgs/{org_id}/policies` - Updated
+- added the new `asset-id` enum value to the `data/attributes/conditions_group/conditions/items/field` response property for the response status `201`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `snyk-id` enum value to the `data/attributes/conditions_group/conditions/items/field` response property for the response status `201`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `repository-url` enum value to the request property `data/attributes/conditions_group/conditions/items/field`
+
+- added the new `snyk-id` enum value to the request property `data/attributes/conditions_group/conditions/items/field`
+
+
+
+### GET - `/orgs/{org_id}/policies` - Updated
+- added the new `asset-id` enum value to the `data/items/attributes/conditions_group/conditions/items/field` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `snyk-id` enum value to the `data/items/attributes/conditions_group/conditions/items/field` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### PATCH - `/orgs/{org_id}/policies/{policy_id}` - Updated
+- added the new `asset-id` enum value to the `data/attributes/conditions_group/conditions/items/field` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `snyk-id` enum value to the `data/attributes/conditions_group/conditions/items/field` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/orgs/{org_id}/policies/{policy_id}` - Updated
+- added the new `asset-id` enum value to the `data/attributes/conditions_group/conditions/items/field` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `snyk-id` enum value to the `data/attributes/conditions_group/conditions/items/field` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/orgs/{org_id}/issues` - Updated
+- added the new optional `query` request parameter `project_status`
+
+- added the new optional `query` request parameter `source_types`
+
+- added the optional property `data/items/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/items/attributes/source_type` to the response with the `200` status
+
+
+
+### GET - `/orgs/{org_id}/issues/{issue_id}` - Updated
+- added the optional property `data/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/attributes/source_type` to the response with the `200` status
+
+
+
+### POST - `/groups/{group_id}/secrets/rule_extensions` - Updated
+- added the new `suppression` enum value to the `data/attributes/configuration/type` response property for the response status `201`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- added the new `suppression` enum value to the request property `data/attributes/oneOf[#/components/schemas/CreateSecretsRuleExtensionAttributes]/configuration/type`
+
+
+
+### GET - `/groups/{group_id}/secrets/rule_extensions` - Updated
+- added the new `suppression` enum value to the `data/items/attributes/configuration/type` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### PATCH - `/groups/{group_id}/secrets/rule_extensions/{rule_extension_id}` - Updated
+- added the new `suppression` enum value to the `data/attributes/configuration/type` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/groups/{group_id}/secrets/rule_extensions/{rule_extension_id}` - Updated
+- added the new `suppression` enum value to the `data/attributes/configuration/type` response property for the response status `200`
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### POST - `/groups/{group_id}/memberships` - Updated
+- request body became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/group/data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/group/data/id` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/role/data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/role/data/id` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/user/data` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+- the request property `data/relationships/user/data/id` became required
+![Badge](https://img.shields.io/badge/Breaking-yellow)
+
+
+### GET - `/groups/{group_id}/issues` - Updated
+- added the new optional `query` request parameter `project_status`
+
+- added the new optional `query` request parameter `source_types`
+
+- added the optional property `data/items/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/items/attributes/source_type` to the response with the `200` status
+
+
+
+### GET - `/groups/{group_id}/issues/{issue_id}` - Updated
+- added the optional property `data/attributes/project_status` to the response with the `200` status
+
+- added the optional property `data/attributes/source_type` to the response with the `200` status
+
+
 ## 2026-03-25 - Updated 2026-09-30
 
 ### POST - `/orgs/{org_id}/export` - Updated
